@@ -9,6 +9,7 @@ import '../../global.dart';
 import '../../widgets/customStepper.dart';
 import 'package:http/http.dart' as http;
 
+import '../../widgets/flightBottomSheets.dart';
 import 'SeatSelection.dart';
 
 class FlightCustomisePage extends StatefulWidget {
@@ -167,13 +168,14 @@ class _FlightCustomisePageState extends State<FlightCustomisePage> {
       },
         child: Scaffold(
           appBar: AppBar(
-            title: Text("$title"),
+            backgroundColor: Colors.purple,
+            title: Text("$title",style: TextStyle(color: Colors.white),),
             leading: GestureDetector(
               onTap: (){
                 print(currentStep);
                 decrementStep();
               },
-                child: Icon(Icons.arrow_back)
+                child: Icon(Icons.arrow_back,color: Colors.white,)
             ),
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(40), // Set the preferred height of the stepper
@@ -192,254 +194,76 @@ class _FlightCustomisePageState extends State<FlightCustomisePage> {
             ),
           ),
           bottomNavigationBar: BottomAppBar(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 60,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                "Rs. 165202.56",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(width: 5,),
-                              InkWell(
+                          const Text(
+                            "Rs. 165202.56",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Tooltip(
+                            message: 'Price breakdown',
+                            child: InkWell(
                                 onTap: (){
                                   showModalBottomSheet(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return Container(
-                                        margin:
-                                        EdgeInsets.all(
-                                            10.0),
-                                        child: Wrap(
-                                          children: <
-                                              Widget>[
-                                            Center(
-                                                child: Container(
-                                                  height:4.0,
-                                                  width:50.0,
-                                                  color: Colors.grey[800],
-                                                )),
-                                            SizedBox(
-                                              height: 10.0,
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 10,bottom: 20,left: 10,right: 10),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 20,bottom: 20),
-                                                    child: Text(
-                                                      "Price breakdown",
-                                                      style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight: FontWeight.bold
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 5,bottom: 5),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          "Tickets (1 adult)",
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              fontWeight: FontWeight.w500
-                                                          ),
-                                                        ),Text(
-                                                          "Rs. 123412",
-                                                          style: TextStyle(
-                                                              fontSize: 14,
-                                                              fontWeight: FontWeight.w500
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 5,bottom: 5),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          "Flight fare",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              color: Colors.grey
-                                                          ),
-                                                        ),Text(
-                                                          "Rs. 213",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              color: Colors.grey
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 5,bottom: 5),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          "Taxes and charges",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              color: Colors.grey
-                                                          ),
-                                                        ),Text(
-                                                          "Rs. 1234",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              color: Colors.grey
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 5,bottom: 5),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          "Discount",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              color: Colors.grey
-                                                          ),
-                                                        ),Text(
-                                                          "Rs. -567",
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              color: Colors.grey
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 20,bottom: 5),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          "Total price",
-                                                          style: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight: FontWeight.bold
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          "Rs. 234243.656",
-                                                          style: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight: FontWeight.bold
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        "includes taxes and charges",
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            color: Colors.grey
-                                                        ),
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                      return const FlightPriceBreakdown(
+                                        count: 3,
+                                        tickets: 12345,
+                                        fare: 321,
+                                        tax: 112,
+                                        discount: 100,
+                                        totalPrice: 12678,
                                       );
                                     },
                                   );
                                 },
-                                child: Icon(
-                                  Icons.info_outline,
-                                  size: 18,
-                                ),
-                              )
-                            ],
+                                borderRadius: BorderRadius.circular(100),
+                                child: const Icon(Icons.info_outline)),
                           ),
-                          Text(
-                              "1 traveller"
-                          )
                         ],
+                      ),
+                      const Text(
+                          "1 traveller"
+                      ),
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    incrementStep();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    // padding: const EdgeInsets.symmetric(
+                    // horizontal: 40.0, vertical: 20.0),
+                    backgroundColor: Colors.purple,
+                    // shadowColor: Colors.transparent,
+                    // shape: const StadiumBorder(),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      'Next',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
                       ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2,
-                    decoration: BoxDecoration(
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Colors.black26,
-                            offset: Offset(0, 4),
-                            blurRadius: 5.0)
-                      ],
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [0.0, 1.0],
-                        colors: [
-                          Colors.purple,
-                          Colors.purple,
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => TicketTypePage()),
-                        // );
-                        incrementStep();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40.0, vertical: 20.0),
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        shape: const StadiumBorder(),
-                      ),
-                      child: Text(
-                        "Next",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Metropolis',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 

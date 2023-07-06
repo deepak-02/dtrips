@@ -14,6 +14,7 @@ import '../../../db/Hotel/bookedHotelDetails.dart';
 import '../../../db/api.dart';
 import 'package:http/http.dart' as http;
 
+import '../../widgets/hotelBottomSheets.dart';
 import '../dashboard.dart';
 import 'map.dart';
 
@@ -740,31 +741,28 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  InkWell(
-                                                    onTap: () {},
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Flexible(
-                                                          child: Text(
-                                                            "${bookedRoomDetails[index].roomTypeName}",
-                                                            maxLines: 3,
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: screenSize
-                                                                        .width /
-                                                                    20,
-                                                                color: Colors
-                                                                    .purple),
-                                                          ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Flexible(
+                                                        child: Text(
+                                                          "${bookedRoomDetails[index].roomTypeName}",
+                                                          maxLines: 3,
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: screenSize
+                                                                      .width /
+                                                                  20,
+                                                              color: Colors
+                                                                  .purple),
                                                         ),
-                                                        // Icon(Icons.info_outline,size: 30,color: Colors.purple,),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                      // Icon(Icons.info_outline,size: 30,color: Colors.purple,),
+                                                    ],
                                                   ),
                                                   SizedBox(
                                                     height: 10,
@@ -850,160 +848,51 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                   SizedBox(
                                                     height: 10,
                                                   ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      showModalBottomSheet<
-                                                          void>(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return Container(
-                                                            margin:
-                                                                EdgeInsets.all(
-                                                                    10.0),
-                                                            child: Wrap(
-                                                              children: <
-                                                                  Widget>[
-                                                                Center(
-                                                                    child: Container(
-                                                                        height:
-                                                                            4.0,
-                                                                        width:
-                                                                            50.0,
-                                                                        color: Color(
-                                                                            0xFF32335C))),
-                                                                SizedBox(
-                                                                  height: 10.0,
-                                                                ),
-                                                                Column(
-                                                                  children: [
-                                                                    ListView.builder(
-                                                                        itemCount: 1,
-                                                                        shrinkWrap: true,
-                                                                        physics: NeverScrollableScrollPhysics(),
-                                                                        itemBuilder: (BuildContext ctxt, int i) {
-                                                                          return Container(
-                                                                            padding:
-                                                                                EdgeInsets.only(bottom: 10),
-                                                                            child:
-                                                                                Column(
-                                                                              children: [
-                                                                                Row(
-                                                                                  children: [
-                                                                                    Icon(
-                                                                                      Icons.circle_outlined,
-                                                                                      size: 10,
-                                                                                    ),
-                                                                                    SizedBox(
-                                                                                      width: 10,
-                                                                                    ),
-                                                                                    Text(
-                                                                                      "Charge: ${bookedRoomDetails[index].cancellationPolicies![0].charge}",
-                                                                                      maxLines: 2,
-                                                                                      style: TextStyle(fontSize: screenSize.width / 26, fontWeight: FontWeight.w600, color: Colors.green),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  height: 5,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: [
-                                                                                    Icon(
-                                                                                      Icons.circle_outlined,
-                                                                                      size: 10,
-                                                                                    ),
-                                                                                    SizedBox(
-                                                                                      width: 10,
-                                                                                    ),
-                                                                                    Text(
-                                                                                      "ChargeType: ${bookedRoomDetails[index].cancellationPolicies![0].chargeType}",
-                                                                                      maxLines: 2,
-                                                                                      style: TextStyle(fontSize: screenSize.width / 26, fontWeight: FontWeight.w600, color: Colors.green),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  height: 5,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: [
-                                                                                    Icon(
-                                                                                      Icons.circle_outlined,
-                                                                                      size: 10,
-                                                                                    ),
-                                                                                    SizedBox(
-                                                                                      width: 10,
-                                                                                    ),
-                                                                                    Text(
-                                                                                      "From: ${bookedRoomDetails[index].cancellationPolicies![0].fromDate}",
-                                                                                      maxLines: 2,
-                                                                                      style: TextStyle(fontSize: screenSize.width / 26, fontWeight: FontWeight.w600, color: Colors.green),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  height: 5,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: [
-                                                                                    Icon(
-                                                                                      Icons.circle_outlined,
-                                                                                      size: 10,
-                                                                                    ),
-                                                                                    SizedBox(
-                                                                                      width: 10,
-                                                                                    ),
-                                                                                    Text(
-                                                                                      "To: ${bookedRoomDetails[index].cancellationPolicies![0].toDate}",
-                                                                                      maxLines: 2,
-                                                                                      style: TextStyle(fontSize: screenSize.width / 26, fontWeight: FontWeight.w600, color: Colors.green),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  height: 5,
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          );
-                                                                        })
-                                                                  ],
-                                                                )
-                                                              ],
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.check,
-                                                          size: 20,
-                                                          color: Colors.green,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Flexible(
-                                                          child: Html(data: bookedRoomDetails[index].cancellationPolicy),
-                                                          // Text(
-                                                          //   "${bookedRoomDetails[index].cancellationPolicy!.replaceAll("#^#", '.\n').replaceAll("|#!#", '')}",
-                                                          //   // "Room Deluxe#^#100.00% of total amount will be charged, If cancelled between 29-Dec-2022 00:00:00 and 31-Dec-2022 23:59:59.|#!#",
-                                                          //   maxLines: 6,
-                                                          //   style: TextStyle(
-                                                          //       fontSize: screenSize
-                                                          //               .width /
-                                                          //           26,
-                                                          //       color: Colors
-                                                          //           .green,
-                                                          //       fontWeight:
-                                                          //           FontWeight
-                                                          //               .w600),
-                                                          // ),
-                                                        )
-                                                      ],
+                                                  Tooltip(
+                                                    message: 'Cancellation Policy',
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        showModalBottomSheet<void>(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return HotelCancellationPolicy(
+                                                              charge: bookedRoomDetails[index].cancellationPolicies![0].charge,
+                                                              chargeType: bookedRoomDetails[index].cancellationPolicies![0].chargeType,
+                                                              from: bookedRoomDetails[index].cancellationPolicies![0].fromDate.toString(),
+                                                              to: bookedRoomDetails[index].cancellationPolicies![0].toDate.toString(),
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.check,
+                                                            size: 20,
+                                                           // color: Colors.green,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Flexible(
+                                                            child: Html(data: bookedRoomDetails[index].cancellationPolicy),
+                                                            // Text(
+                                                            //   "${bookedRoomDetails[index].cancellationPolicy!.replaceAll("#^#", '.\n').replaceAll("|#!#", '')}",
+                                                            //   // "Room Deluxe#^#100.00% of total amount will be charged, If cancelled between 29-Dec-2022 00:00:00 and 31-Dec-2022 23:59:59.|#!#",
+                                                            //   maxLines: 6,
+                                                            //   style: TextStyle(
+                                                            //       fontSize: screenSize
+                                                            //               .width /
+                                                            //           26,
+                                                            //       color: Colors
+                                                            //           .green,
+                                                            //       fontWeight:
+                                                            //           FontWeight
+                                                            //               .w600),
+                                                            // ),
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -1021,9 +910,7 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                       Text(
                                                         "${bookedRoomDetails[index].smokingPreference}",
                                                         style: TextStyle(
-                                                          fontSize:
-                                                              screenSize.width /
-                                                                  26,
+                                                          fontSize:14,
                                                         ),
                                                       )
                                                     ],
@@ -1041,498 +928,52 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                   ),
                                                   Row(
                                                     children: [
-                                                      InkWell(
-                                                        onTap: () {},
-                                                        child: Text(
-                                                          "Rs. ${bookedRoomDetails[index].price!.roomPrice.toStringAsFixed(2)}",
-                                                          style: TextStyle(
-                                                              fontSize: screenSize
-                                                                      .width /
-                                                                  24,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
+                                                      Text(
+                                                        "Rs. ${bookedRoomDetails[index].price!.roomPrice.toStringAsFixed(2)}",
+                                                        style: TextStyle(
+                                                            fontSize: screenSize
+                                                                    .width /
+                                                                24,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
                                                       ),
                                                       SizedBox(
                                                         width: 10,
                                                       ),
-                                                      InkWell(
-                                                          onTap: () {
-                                                            showModalBottomSheet<
-                                                                void>(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return Container(
-                                                                  margin: EdgeInsets
-                                                                      .all(
-                                                                          10.0),
-                                                                  child: Wrap(
-                                                                    children: <
-                                                                        Widget>[
-                                                                      Center(
-                                                                          child: Container(
-                                                                              height: 4.0,
-                                                                              width: 50.0,
-                                                                              color: Color(0xFF32335C))),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            10.0,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "RoomPrice: ${bookedRoomDetails[index].price!.roomPrice}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "Tax: ${bookedRoomDetails[index].price!.tax}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "ExtraGuestCharge: ${bookedRoomDetails[index].price!.extraGuestCharge}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "ChildCharge: ${bookedRoomDetails[index].price!.childCharge}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "OtherCharges: ${bookedRoomDetails[index].price!.otherCharges}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "Discount: ${bookedRoomDetails[index].price!.discount}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "PublishedPrice: ${bookedRoomDetails[index].price!.publishedPrice}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "PublishedPriceRoundedOff: ${bookedRoomDetails[index].price!.publishedPriceRoundedOff}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "OfferedPrice: ${bookedRoomDetails[index].price!.offeredPrice}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "OfferedPriceRoundedOff: ${bookedRoomDetails[index].price!.offeredPriceRoundedOff}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "AgentCommission: ${bookedRoomDetails[index].price!.agentCommission}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "AgentMarkUp: ${bookedRoomDetails[index].price!.agentMarkUp}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "ServiceTax: ${bookedRoomDetails[index].price!.serviceTax}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "TCS: ${bookedRoomDetails[index].price!.tcs}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "TDS: ${bookedRoomDetails[index].price!.tds}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "ServiceCharge: ${bookedRoomDetails[index].price!.serviceCharge}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.circle_outlined,
-                                                                            size:
-                                                                                10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "TotalGSTAmount: ${bookedRoomDetails[index].price!.totalGstAmount}",
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: screenSize.width / 26,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.green),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                );
-                                                              },
-                                                            );
-                                                          },
-                                                          child: Icon(
-                                                            Icons.info_outlined,
-                                                            size: 20,
-                                                          ))
+                                                      Tooltip(
+                                                        message: "Price Breakdown",
+                                                        child: InkWell(
+                                                            onTap: () {
+                                                              showModalBottomSheet<void>(context: context,
+                                                                builder:(context) {
+                                                                  return HotelPriceBreakdown(
+                                                                    roomPrice: bookedRoomDetails[index].price!.roomPrice,
+                                                                    tax: bookedRoomDetails[index].price!.tax,
+                                                                    extraGuestCharge: bookedRoomDetails[index].price!.extraGuestCharge,
+                                                                    childCharge: bookedRoomDetails[index].price!.childCharge,
+                                                                    otherCharges: bookedRoomDetails[index].price!.otherCharges,
+                                                                    discount: bookedRoomDetails[index].price!.discount,
+                                                                    publishedPrice: bookedRoomDetails[index].price!.publishedPrice,
+                                                                    publishedPriceRoundOff: bookedRoomDetails[index].price!.publishedPriceRoundedOff,
+                                                                    offeredPrice: bookedRoomDetails[index].price!.offeredPrice,
+                                                                    offeredPriceRoundOff: bookedRoomDetails[index].price!.offeredPriceRoundedOff,
+                                                                    agentCommission: bookedRoomDetails[index].price!.agentCommission,
+                                                                    agentMarkup: bookedRoomDetails[index].price!.agentMarkUp,
+                                                                    serviceTax: bookedRoomDetails[index].price!.serviceTax,
+                                                                    tcs: bookedRoomDetails[index].price!.tcs,
+                                                                    tds: bookedRoomDetails[index].price!.tds,
+                                                                    serviceCharge: bookedRoomDetails[index].price!.serviceCharge,
+                                                                    totalGstAmount: bookedRoomDetails[index].price!.totalGstAmount,
+                                                                  );
+                                                                },
+                                                              );
+                                                            },
+                                                            child: Icon(
+                                                              Icons.info_outlined,
+                                                              size: 20,
+                                                            )),
+                                                      )
                                                     ],
                                                   ),
                                                   SizedBox(

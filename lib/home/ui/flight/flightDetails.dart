@@ -269,45 +269,47 @@ class _FlightDetailsState extends State<FlightDetails> {
               ],
             ),
 
-            Container(
-              width: 200,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FlightCustomisePage(
-                              ResultIndex: widget.ResultIndex,
-                              TraceId: widget.TraceId,
-                              Token: widget.Token,
-                            )),
-                  );
-                },
-                // style: ElevatedButton.styleFrom(
-                //   padding: const EdgeInsets.symmetric(
-                //       horizontal: 40.0, vertical: 20.0),
-                //   backgroundColor: Colors.transparent,
-                //   shadowColor: Colors.transparent,
-                //   shape: const StadiumBorder(),
-                // ),
-                child: isLoading
-                    ? Container(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        ))
-                    : Text(
-                        "Select",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Metropolis',
-                        ),
-                      ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FlightCustomisePage(
+                        ResultIndex: widget.ResultIndex,
+                        TraceId: widget.TraceId,
+                        Token: widget.Token,
+                      )),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                // padding: const EdgeInsets.symmetric(
+                // horizontal: 40.0, vertical: 20.0),
+                backgroundColor: Colors.purple,
+                // shadowColor: Colors.transparent,
+                // shape: const StadiumBorder(),
               ),
+              child: isLoading
+                  ? Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Container(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    )),
+                  )
+                  : Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                "Select",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontFamily: 'Metropolis',
+                ),
+              ),
+                  ),
             ),
           ],
         ),

@@ -27,7 +27,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
         backgroundColor: Colors.purple,
         leading: IconButton(
           tooltip: 'back',
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back,color: Colors.white,),
           onPressed: () {
             Get.back();
           },
@@ -36,89 +36,67 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
           children: [
             Text(
               "${widget.origin}",
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16,color: Colors.white),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Icon(Icons.arrow_right_alt),
+              child: Icon(Icons.arrow_right_alt,color: Colors.white,),
             ),
             Text(
               "${widget.destination}",
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16,color: Colors.white),
             ),
           ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: 60,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
                       Text(
                         "0 of 2 seats selected",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text("Travellers 2")
                     ],
                   ),
-                ),
+                  Text(
+                      "2 travellers"
+                  ),
+                ],
               ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      // boxShadow: const [
-                      //   BoxShadow(
-                      //       color: Colors.black26,
-                      //       offset: Offset(0, 4),
-                      //       blurRadius: 5.0)
-                      // ],
-                      // gradient: const LinearGradient(
-                      //   begin: Alignment.topLeft,
-                      //   end: Alignment.bottomRight,
-                      //   stops: [0.0, 1.0],
-                      //   colors: [
-                      //     Color(0xff92278f),
-                      //     Color(0xff92278f),
-                      //   ],
-                      // ),
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: Colors.purple)),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40.0, vertical: 20.0),
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                      shape: const StadiumBorder(),
-                    ),
-                    child: Text(
-                      "Overview",
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Metropolis',
-                      ),
-                    ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Add your next button logic here
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple,
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Overview',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),

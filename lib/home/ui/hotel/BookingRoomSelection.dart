@@ -1441,7 +1441,8 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
       // print(roomCombinationsArray.length);
       // print(roomCombinationsArray.toJSON());
 
-      if (result.getHotelRoomResult.error!.errorCode == 5) {
+      if (response.body.contains('Your session (TraceId) is expired')) {
+
         showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -1451,12 +1452,6 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
               TextButton(
                 onPressed: () => Get.to(Dashboard()),
                 child: const Text('Go Home'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancel'),
               ),
             ],
           ),
