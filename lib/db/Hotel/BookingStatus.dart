@@ -120,8 +120,8 @@ class BookingStatus {
         payid: json["payid"],
         cancelcharge: json["cancelcharge"],
         image: json["image"],
-    changerequestid: json["changerequestid"],
-    refund: json["refund"],
+        changerequestid: json["changerequestid"],
+        refund: json["refund"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -142,6 +142,6 @@ class BookingStatus {
         "cancelcharge": cancelcharge,
         "image": image,
         "changerequestid": changerequestid,
-    "refund": refund,
+        "refund": refund,
       };
 }

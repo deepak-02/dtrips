@@ -620,7 +620,9 @@ class _SingleHotelPageState extends State<SingleHotelPage> {
                                                       const EdgeInsets.only(
                                                           right: 30, top: 5),
                                                   child: ReadMoreText(
-                                                    widget.contact == null ? "No data available!":"${widget.contact}",
+                                                    widget.contact == null
+                                                        ? "No data available!"
+                                                        : "${widget.contact}",
                                                     trimLines: 4,
                                                     style: TextStyle(
                                                         fontFamily:
@@ -661,58 +663,65 @@ class _SingleHotelPageState extends State<SingleHotelPage> {
                                       ),
                                     ),
                                   ),
-                                  widget.longitude == null && widget.latitude == null || widget.longitude == "" && widget.latitude == ""
-                                      ? Container() : Container(
-                                    padding: EdgeInsets.only(
-                                        top: 40, bottom: 40, right: 20),
-                                    alignment: Alignment.centerRight,
-                                    child: Column(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () async {
-                                            widget.longitude == ""
-                                                ? null
-                                                :
-                                            // Get.to(LocationPage(
-                                            //         longitude: double.parse(
-                                            //             widget.longitude),
-                                            //         latitude: double.parse(
-                                            //             widget.latitude),
-                                            //         name: widget.name,
-                                            //         description: widget.address,
-                                            //       ));
+                                  widget.longitude == null &&
+                                              widget.latitude == null ||
+                                          widget.longitude == "" &&
+                                              widget.latitude == ""
+                                      ? Container()
+                                      : Container(
+                                          padding: EdgeInsets.only(
+                                              top: 40, bottom: 40, right: 20),
+                                          alignment: Alignment.centerRight,
+                                          child: Column(
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  widget.longitude == ""
+                                                      ? null
+                                                      :
+                                                      // Get.to(LocationPage(
+                                                      //         longitude: double.parse(
+                                                      //             widget.longitude),
+                                                      //         latitude: double.parse(
+                                                      //             widget.latitude),
+                                                      //         name: widget.name,
+                                                      //         description: widget.address,
+                                                      //       ));
 
-                                            await MapLauncher.showMarker(
-                                                    mapType: MapType.google,
-                                                    coords: Coords(
-                                                        double.parse(
-                                                            widget.latitude),
-                                                        double.parse(
-                                                            widget.longitude)),
-                                                    title: '${widget.name}',
-                                                  );
-                                          },
-                                          child: CircleAvatar(
-                                              radius: 20,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              child: Image.asset(
-                                                  'assets/images/icons/location.png')),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "MAP",
-                                          style: TextStyle(
-                                            fontFamily: "Metropolis",
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14,
+                                                      await MapLauncher
+                                                          .showMarker(
+                                                          mapType:
+                                                              MapType.google,
+                                                          coords: Coords(
+                                                              double.parse(widget
+                                                                  .latitude),
+                                                              double.parse(widget
+                                                                  .longitude)),
+                                                          title:
+                                                              '${widget.name}',
+                                                        );
+                                                },
+                                                child: CircleAvatar(
+                                                    radius: 20,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    child: Image.asset(
+                                                        'assets/images/icons/location.png')),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "MAP",
+                                                style: TextStyle(
+                                                  fontFamily: "Metropolis",
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
                                 ]),
                                 SizedBox(
                                   height: 10,

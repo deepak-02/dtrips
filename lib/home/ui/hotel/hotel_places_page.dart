@@ -45,7 +45,9 @@ class _HotelPlacesPageState extends State<HotelPlacesPage> {
       body: jsonEncode({
         "off": onset,
         "on": offset,
-        "keyword": searchController.text.isEmpty ? "india" : searchController.text.toString().trim(),
+        "keyword": searchController.text.isEmpty
+            ? "india"
+            : searchController.text.toString().trim(),
         //"page": currentPage.toString()
       }),
       headers: {"content-type": "application/json"},

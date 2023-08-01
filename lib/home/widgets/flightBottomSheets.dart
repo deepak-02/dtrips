@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class FlightPriceBreakdown extends StatelessWidget {
   const FlightPriceBreakdown(
       {super.key,
-        required this.tickets,
-        required this.count,
-        required this.fare,
-        required this.tax,
-        required this.discount,
-        required this.totalPrice});
+      required this.tickets,
+      required this.count,
+      required this.fare,
+      required this.tax,
+      required this.discount,
+      required this.totalPrice});
 
   final dynamic tickets;
   final dynamic count;
@@ -35,7 +35,7 @@ class FlightPriceBreakdown extends StatelessWidget {
           ),
           Padding(
             padding:
-            const EdgeInsets.only(top: 10, bottom: 20, left: 10, right: 10),
+                const EdgeInsets.only(top: 10, bottom: 20, left: 10, right: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

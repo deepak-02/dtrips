@@ -192,7 +192,7 @@ class NetworkConnectivity {
     }
     try {
       _controller.sink.add({result: isOnline});
-    } catch (e){
+    } catch (e) {
       print(e);
     }
     getIp();
@@ -206,7 +206,7 @@ class NetworkConnectivity {
       print(ipv4); // 98.207.254.136
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('ip', ipv4);
-    } catch(e){
+    } catch (e) {
       print(e);
     }
   }

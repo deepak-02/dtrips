@@ -1,14 +1,12 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:currency_picker/currency_picker.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Shared/SharedPrefs.dart';
-import '../account/profile_page.dart';
 import '../dashboard.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -34,7 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
     final screenSize = MediaQuery.of(context).size;
     final orientation = MediaQuery.of(context).orientation.name;
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
             Color.fromRGBO(255, 255, 255, 1.0),
@@ -56,12 +54,15 @@ class _SettingsPageState extends State<SettingsPage> {
             appBar: AppBar(
               backgroundColor: Colors.purple,
               automaticallyImplyLeading: false,
-              title: Text("Settings",style: TextStyle(color: Colors.white),),
+              title: const Text(
+                "Settings",
+                style: TextStyle(color: Colors.white),
+              ),
               leading: InkWell(
                 onTap: () {
                   Get.off(Dashboard());
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   size: 30,
                   color: Colors.white,
@@ -94,7 +95,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         InkWell(
@@ -106,22 +107,23 @@ class _SettingsPageState extends State<SettingsPage> {
                               showCurrencyName: true,
                               showCurrencyCode: true,
                               onSelect: (Currency currency) {
-                                print('Select currency: ${currency.code}');
-                                print('Select country: ${currency}');
+                                if (kDebugMode) {
+                                  print('Select currency: ${currency.code}');
+                                  print('Select country: $currency');
+                                }
+
                                 setState(() {
-                                  pickedCountryCode =
-                                      currency.code.toString();
+                                  pickedCountryCode = currency.code.toString();
                                   setCurrency(currency.code);
                                 });
                               },
                               favorite: ['INR'],
                             );
                           },
-                          child: Container(
+                          child: SizedBox(
                             height: 50,
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
@@ -135,11 +137,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ),
                                 ),
                                 Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(pickedCountryCode.toString()),
-                                    Icon(
+                                    const Icon(
                                       Icons.keyboard_arrow_right,
                                       size: 20,
                                     ),
@@ -156,14 +157,14 @@ class _SettingsPageState extends State<SettingsPage> {
                               countryListTheme: CountryListThemeData(
                                 flagSize: 25,
                                 backgroundColor: Colors.white,
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                     fontSize: 16, color: Colors.blueGrey),
                                 bottomSheetHeight: MediaQuery.of(context)
                                         .size
                                         .height /
                                     1.5, // Optional. Country list modal height
                                 //Optional. Sets the border radius for the bottomsheet.
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(20.0),
                                   topRight: Radius.circular(20.0),
                                 ),
@@ -181,10 +182,11 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ),
                               onSelect: (Country country) {
-                                print(
-                                    'Select country: ${country.displayName}');
-                                print(
-                                    'Select code: ${country.countryCode}');
+                                if (kDebugMode) {
+                                  print('Select code: ${country.countryCode}');
+                                  print(
+                                      'Select country: ${country.displayName}');
+                                }
                                 setState(() {
                                   pickedCountry =
                                       country.countryCode.toString();
@@ -194,11 +196,10 @@ class _SettingsPageState extends State<SettingsPage> {
                               favorite: ['IN'],
                             );
                           },
-                          child: Container(
+                          child: SizedBox(
                             height: 50,
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
@@ -212,11 +213,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ),
                                 ),
                                 Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(pickedCountry.toString()),
-                                    Icon(
+                                    const Icon(
                                       Icons.keyboard_arrow_right,
                                       size: 20,
                                     ),
@@ -226,7 +226,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           height: 20,
                           indent: 10,
                           endIndent: 10,
@@ -234,7 +234,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 50,),
+                    const SizedBox(
+                      height: 50,
+                    ),
                     Column(
                       children: [
                         Row(
@@ -252,7 +254,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         InkWell(
@@ -263,7 +265,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                           child: Row(
                             children: [
-                              Container(
+                              SizedBox(
                                 height: 30,
                                 child: Text(
                                   "Privacy policy",
@@ -279,7 +281,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         InkWell(
@@ -290,7 +292,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                           child: Row(
                             children: [
-                              Container(
+                              SizedBox(
                                 height: 30,
                                 child: Text(
                                   "Terms and Conditions",
@@ -306,7 +308,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -325,14 +327,14 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Container(
                       height: 100,
                       width: 150,
-                      decoration: BoxDecoration(
-                        image: new DecorationImage(
-                          image: AssetImage(
-                              "assets/images/dtrips_logo_dark.png"),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image:
+                              AssetImage("assets/images/dtrips_logo_dark.png"),
                           fit: BoxFit.contain,
                         ),
                       ),

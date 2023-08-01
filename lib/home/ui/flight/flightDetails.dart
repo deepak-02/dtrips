@@ -50,16 +50,19 @@ class _FlightDetailsState extends State<FlightDetails> {
         backgroundColor: Colors.purple,
         leading: IconButton(
           tooltip: 'back',
-          icon: Icon(Icons.arrow_back,color: Colors.white,),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () async {
             Get.back();
-            await Future.delayed(Duration(seconds: 2));
+            await Future.delayed(const Duration(seconds: 2));
             flightDetails.clear();
           },
         ),
-        title: Text(
+        title: const Text(
           "Your flight to Dublin",
-          style: TextStyle(fontSize: 16,color: Colors.white),
+          style: TextStyle(fontSize: 16, color: Colors.white),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -73,12 +76,12 @@ class _FlightDetailsState extends State<FlightDetails> {
                   children: [
                     Text(
                       "Rs. ${double.parse((flightDetails[0].fare!.tax! + flightDetails[0].fare!.otherCharges! + flightDetails[0].fare!.baseFare! - flightDetails[0].fare!.discount!).toStringAsFixed(2))}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     InkWell(
@@ -87,7 +90,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                           context: context,
                           builder: (BuildContext context) {
                             return Container(
-                              margin: EdgeInsets.all(10.0),
+                              margin: const EdgeInsets.all(10.0),
                               child: Wrap(
                                 children: <Widget>[
                                   Center(
@@ -96,7 +99,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                     width: 50.0,
                                     color: Colors.grey[800],
                                   )),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10.0,
                                   ),
                                   Padding(
@@ -109,15 +112,14 @@ class _FlightDetailsState extends State<FlightDetails> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
+                                        const Padding(
+                                          padding: EdgeInsets.only(
                                               top: 20, bottom: 20),
                                           child: Text(
                                             "Price breakdown",
                                             style: TextStyle(
                                                 fontSize: 18,
-                                                fontWeight:
-                                                    FontWeight.bold),
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                         Padding(
@@ -125,10 +127,9 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               top: 5, bottom: 5),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
+                                              const Text(
                                                 "Tickets (1 adult)",
                                                 style: TextStyle(
                                                     fontSize: 14,
@@ -137,7 +138,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               ),
                                               Text(
                                                 "Rs. ${double.parse(flightDetails[0].fare!.publishedFare!.toStringAsFixed(2))}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 14,
                                                     fontWeight:
                                                         FontWeight.w500),
@@ -150,10 +151,9 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               top: 5, bottom: 5),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
+                                              const Text(
                                                 "Flight fare",
                                                 style: TextStyle(
                                                     fontSize: 12,
@@ -161,7 +161,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               ),
                                               Text(
                                                 "Rs. ${double.parse(flightDetails[0].fare!.baseFare!.toStringAsFixed(2))}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.grey),
                                               ),
@@ -173,10 +173,9 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               top: 5, bottom: 5),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
+                                              const Text(
                                                 "Taxes and charges",
                                                 style: TextStyle(
                                                     fontSize: 12,
@@ -184,7 +183,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               ),
                                               Text(
                                                 "Rs. ${double.parse(flightDetails[0].fare!.tax!.toStringAsFixed(2)) + double.parse(flightDetails[0].fare!.otherCharges!.toStringAsFixed(2))}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.grey),
                                               ),
@@ -196,10 +195,9 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               top: 5, bottom: 5),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
+                                              const Text(
                                                 "Discount",
                                                 style: TextStyle(
                                                     fontSize: 12,
@@ -207,7 +205,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               ),
                                               Text(
                                                 "Rs. -${flightDetails[0].fare!.discount}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.grey),
                                               ),
@@ -219,10 +217,9 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               top: 20, bottom: 5),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
+                                              const Text(
                                                 "Total price",
                                                 style: TextStyle(
                                                     fontSize: 18,
@@ -231,7 +228,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               ),
                                               Text(
                                                 "Rs. ${double.parse((flightDetails[0].fare!.tax! + flightDetails[0].fare!.otherCharges! + flightDetails[0].fare!.baseFare! - flightDetails[0].fare!.discount!).toStringAsFixed(2))}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:
                                                         FontWeight.bold),
@@ -239,7 +236,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                             ],
                                           ),
                                         ),
-                                        Row(
+                                        const Row(
                                           children: [
                                             Text(
                                               "includes taxes and charges",
@@ -258,7 +255,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                           },
                         );
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.info_outline,
                         size: 18,
                       ),
@@ -268,17 +265,16 @@ class _FlightDetailsState extends State<FlightDetails> {
                 Text("${noOfAdult + noOfChild + noOfInfant} traveller")
               ],
             ),
-
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => FlightCustomisePage(
-                        ResultIndex: widget.ResultIndex,
-                        TraceId: widget.TraceId,
-                        Token: widget.Token,
-                      )),
+                            ResultIndex: widget.ResultIndex,
+                            TraceId: widget.TraceId,
+                            Token: widget.Token,
+                          )),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -290,26 +286,26 @@ class _FlightDetailsState extends State<FlightDetails> {
               ),
               child: isLoading
                   ? Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Container(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 2,
-                    )),
-                  )
-                  : Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                "Select",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontFamily: 'Metropolis',
-                ),
-              ),
-                  ),
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          child: const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          )),
+                    )
+                  : const Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "Select",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontFamily: 'Metropolis',
+                        ),
+                      ),
+                    ),
             ),
           ],
         ),
@@ -350,7 +346,7 @@ class _FlightDetailsState extends State<FlightDetails> {
               // ),
 
               ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: flightDetails[0].segments![0].length,
                 itemBuilder: (BuildContext context, int index) {
@@ -394,10 +390,10 @@ class _FlightDetailsState extends State<FlightDetails> {
                           children: [
                             Text(
                               "Flight to ${segment.destination!.airport!.cityName}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
@@ -415,10 +411,10 @@ class _FlightDetailsState extends State<FlightDetails> {
                               children: [
                                 Row(
                                   children: [
-                                    OutlinedDotIndicator(
+                                    const OutlinedDotIndicator(
                                       color: Colors.grey,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10,
                                     ),
                                     Text(
@@ -432,7 +428,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(
+                                      const SizedBox(
                                           height: 180,
                                           child: DashedLineConnector(
                                             color: Colors.grey,
@@ -483,22 +479,22 @@ class _FlightDetailsState extends State<FlightDetails> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 5,
                                                 ),
                                                 Text(
                                                   "${segment.origin!.airport!.airportCode}, ${segment.origin!.airport!.cityName}",
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontSize: 18,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 5,
                                                 ),
                                                 Text(
                                                     "${segment.origin!.airport!.airportName}"),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 5,
                                                 ),
                                                 Text(segment.origin!.airport!
@@ -515,8 +511,8 @@ class _FlightDetailsState extends State<FlightDetails> {
                                                 left: 15, top: 30, bottom: 10),
                                             child: Row(
                                               children: [
-                                                Icon(Icons.flight),
-                                                SizedBox(
+                                                const Icon(Icons.flight),
+                                                const SizedBox(
                                                   width: 20,
                                                 ),
                                                 Column(
@@ -525,19 +521,19 @@ class _FlightDetailsState extends State<FlightDetails> {
                                                   children: [
                                                     Text(
                                                       "${segment.airline!.airlineName}",
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.grey),
                                                     ),
                                                     Text(
                                                       "Flight: ${segment.airline!.airlineCode} ${segment.airline!.flightNumber}",
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.grey),
                                                     ),
                                                     Text(
                                                       "Flight time: ${formatDuration(segment.duration!)}",
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.grey),
                                                     ),
@@ -698,10 +694,10 @@ class _FlightDetailsState extends State<FlightDetails> {
                                 // ),
                                 Row(
                                   children: [
-                                    OutlinedDotIndicator(
+                                    const OutlinedDotIndicator(
                                       color: Colors.grey,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10,
                                     ),
                                     Text(
@@ -714,21 +710,21 @@ class _FlightDetailsState extends State<FlightDetails> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
                                         "${segment.destination!.airport!.airportCode}, ${segment.destination!.airport!.cityName}",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
                                           "${segment.destination!.airport!.airportName}"),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(segment.destination!.airport!
@@ -748,7 +744,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Column(
+                  return const Column(
                     children: [
                       SizedBox(
                         height: 15,
@@ -762,7 +758,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                 },
               ),
 
-              Divider(
+              const Divider(
                 color: Colors.black12,
                 thickness: 10,
               ),
@@ -787,8 +783,8 @@ class _FlightDetailsState extends State<FlightDetails> {
                     }
                   },
                   tileColor: Colors.white,
-                  leading: Padding(
-                    padding: const EdgeInsets.only(right: 10),
+                  leading: const Padding(
+                    padding: EdgeInsets.only(right: 10),
                     child: Icon(
                       Icons.flight_takeoff,
                       color: Colors.black,
@@ -797,9 +793,9 @@ class _FlightDetailsState extends State<FlightDetails> {
                   title: Text(
                     "Check the fare rules and the COVID-19 travel restrictions for $DestinationCountryName",
                     maxLines: 5,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
                   ),
-                  trailing: Icon(
+                  trailing: const Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.black,
                   )),
@@ -844,13 +840,13 @@ class _FlightDetailsState extends State<FlightDetails> {
               //     ),
               //   ),
               // ),
-              Divider(
+              const Divider(
                 color: Colors.black12,
                 thickness: 10,
               ),
 
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   "Included baggage",
                   style: TextStyle(
@@ -859,13 +855,13 @@ class _FlightDetailsState extends State<FlightDetails> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text("The total baggage included in the price"),
               ),
 
               ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: flightDetails[0].segments![0].length,
                 itemBuilder: (BuildContext context, int index) {
@@ -882,13 +878,13 @@ class _FlightDetailsState extends State<FlightDetails> {
                         children: [
                           Text(
                             "Trip to ${segment.destination!.airport!.cityName}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
 
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           // Row(
@@ -924,7 +920,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                           // ),
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.luggage_outlined,
                               ),
                               Padding(
@@ -932,7 +928,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "cabin bag",
                                       style: TextStyle(fontSize: 16),
                                     ),
@@ -940,7 +936,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                       segment.cabinBaggage == null
                                           ? "Up to 0 KG"
                                           : "Up to ${segment.cabinBaggage} each",
-                                      style: TextStyle(fontSize: 16),
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                                     Text(
                                       segment.cabinBaggage == null
@@ -957,12 +953,12 @@ class _FlightDetailsState extends State<FlightDetails> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.luggage_outlined,
                               ),
                               Padding(
@@ -970,7 +966,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "checked bag",
                                       style: TextStyle(fontSize: 16),
                                     ),
@@ -978,7 +974,7 @@ class _FlightDetailsState extends State<FlightDetails> {
                                       segment.baggage == null
                                           ? "Up to 0 KG"
                                           : "Max weight ${segment.baggage}",
-                                      style: TextStyle(fontSize: 16),
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                                     Text(
                                       segment.baggage == null
@@ -1001,11 +997,11 @@ class _FlightDetailsState extends State<FlightDetails> {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider();
+                  return const Divider();
                 },
               ),
 
-              Divider(
+              const Divider(
                 color: Colors.black12,
                 thickness: 10,
               ),
@@ -1087,48 +1083,54 @@ class _FlightDetailsState extends State<FlightDetails> {
   void getFareQuote(resultIndex, traceId, token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var ips = prefs.getString('ip');
+    try {
+      final response = await http.post(
+        Uri.parse('${api}api/flight/fare-quote'),
+        body: jsonEncode({
+          "EndUserIp": "$ips",
+          "TokenId": "$token",
+          "TraceId": "$traceId",
+          "ResultIndex": "$resultIndex"
+        }),
+        headers: {"content-type": "application/json"},
+      );
 
-    final response = await http.post(
-      Uri.parse(api + 'api/flight/fare-quote'),
-      body: jsonEncode({
-        "EndUserIp": "$ips",
-        "TokenId": "$token",
-        "TraceId": "$traceId",
-        "ResultIndex": "$resultIndex"
-      }),
-      headers: {"content-type": "application/json"},
-    );
+      print("fare quote");
+      print(response.statusCode);
+      log(response.body);
 
-    print("fare quote");
-    print(response.statusCode);
-     log(response.body);
+      if (response.statusCode == 200) {
+        final result = fareQuoteModelFromJson(response.body);
+        try {
+          print(result.response!.results!.isLcc!);
+          // fareQuoteResult.add(result.response!.results);
+          LccBaggage.isNotEmpty ? LccBaggage.clear() : null;
+          mealItems.isNotEmpty ? mealItems.clear() : null;
+          specialServices!.isNotEmpty ? specialServices!.clear() : null;
+          seatDynamic!.isNotEmpty ? seatDynamic!.clear() : null;
+        } catch (e) {
+          setState(() {
+            isLoading = false;
+          });
+          print("error: $e");
+        }
 
-    if (response.statusCode == 200) {
-      final result = fareQuoteModelFromJson(response.body);
-
-      print(result.response!.results!.isLcc!);
-      // fareQuoteResult.add(result.response!.results);
-
-      try{
-        LccBaggage.isNotEmpty ? LccBaggage.clear() : null;
-        mealItems.isNotEmpty ? mealItems.clear() : null;
-        specialServices!.isNotEmpty ? specialServices!.clear() : null;
-        seatDynamic!.isNotEmpty ? seatDynamic!.clear() : null;
-
-      }catch(e){
-        print("error: $e");
+        setState(() {
+          isLoading = false;
+          lcc = result.response!.results!.isLcc!;
+        });
       }
 
+      if (lcc) {
+        getSSR(token, traceId, resultIndex);
+      } else {
+        getSSRWithoutLcc(token, traceId, resultIndex);
+      }
+    } catch (e) {
       setState(() {
         isLoading = false;
-        lcc = result.response!.results!.isLcc!;
       });
-    }
-
-    if (lcc) {
-      getSSR(token, traceId, resultIndex);
-    } else {
-      getSSRWithoutLcc(token, traceId, resultIndex);
+      print(e);
     }
   }
 

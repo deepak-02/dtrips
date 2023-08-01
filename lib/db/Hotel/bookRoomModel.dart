@@ -11,16 +11,20 @@ String hotelBookToJson(HotelBook data) => json.encode(data.toJson());
 class HotelBook {
   HotelBook({
     this.bookResult,
+    this.email,
   });
 
   BookResult? bookResult;
+  String? email;
 
   factory HotelBook.fromJson(Map<String, dynamic> json) => HotelBook(
         bookResult: BookResult.fromJson(json["BookResult"]),
+        email: json["email"],
       );
 
   Map<String, dynamic> toJson() => {
         "BookResult": bookResult!.toJson(),
+        "email": email,
       };
 }
 

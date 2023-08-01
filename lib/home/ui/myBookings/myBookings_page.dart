@@ -74,7 +74,7 @@ class _MyBookingsState extends State<MyBookings> {
   // }
 
   void _onRefresh(int tab) async {
-    try{
+    try {
       await Future.delayed(Duration(milliseconds: 1000));
       setState(() {
         MyBookingsList.clear();
@@ -83,18 +83,17 @@ class _MyBookingsState extends State<MyBookings> {
       await getBookings(tab);
 
       setState(() {
-      //   if(tab==1){
-      //     _refreshController1.loadComplete();
-      //   }
-      //   if(tab == 2){
-      //     _refreshController2.loadComplete();
-      //   }
-      //   if(tab == 3){
-      //     _refreshController3.loadComplete();
-      //   }
+        //   if(tab==1){
+        //     _refreshController1.loadComplete();
+        //   }
+        //   if(tab == 2){
+        //     _refreshController2.loadComplete();
+        //   }
+        //   if(tab == 3){
+        //     _refreshController3.loadComplete();
+        //   }
       });
-
-    }catch(e){
+    } catch (e) {
       print(e);
       setState(() {
         // if(tab==1){
@@ -107,9 +106,7 @@ class _MyBookingsState extends State<MyBookings> {
         //   _refreshController3.loadFailed();
         // }
       });
-
     }
-
   }
 
   @override
@@ -124,86 +121,92 @@ class _MyBookingsState extends State<MyBookings> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-          appBar: AppBar(
-            // toolbarHeight: 80,
-            backgroundColor: Colors.purple,
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Trips',
-                style: TextStyle(fontSize: 16,color: Colors.white),
-              ),
+        appBar: AppBar(
+          // toolbarHeight: 80,
+          backgroundColor: Colors.purple,
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Trips',
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
-            bottom: PreferredSize(
-                child: TabBar(
-                    isScrollable: true,
-                    unselectedLabelColor: Colors.white.withOpacity(0.5),
-                    indicatorColor: Colors.white,
-                    indicatorPadding: EdgeInsets.symmetric(horizontal: 15),
-                    labelPadding: EdgeInsets.symmetric(horizontal: 40),
-                    labelColor: Colors.white,
-                    tabs: [
-                      Tab(
-                        text: 'Active',
-                        icon: Icon(
-                          Icons.check_circle_outline,
-                          size: 18,
-                        ),
-                        height: 50,
-                        // child: Text('Active'),
-                      ),
-                      Tab(
-                        text: 'Past',
-                        icon: Icon(
-                          Icons.history,
-                          size: 18,
-                        ),
-                        height: 50,
-                        //  child: Text('Past'),
-                      ),
-                      Tab(
-                        text: 'Cancelled',
-                        icon: Icon(
-                          Icons.cancel_outlined,
-                          size: 18,
-                        ),
-                        height: 50,
-                        // child: Text('Cancelled'),
-                      ),
-                    ]),
-                preferredSize: Size.fromHeight(30.0)),
           ),
-          body: TabBarView(
-            children: <Widget>[
-              //Tab 1
+          bottom: PreferredSize(
+              child: TabBar(
+                  isScrollable: true,
+                  unselectedLabelColor: Colors.white.withOpacity(0.5),
+                  indicatorColor: Colors.white,
+                  indicatorPadding: EdgeInsets.symmetric(horizontal: 15),
+                  labelPadding: EdgeInsets.symmetric(horizontal: 40),
+                  labelColor: Colors.white,
+                  tabs: [
+                    Tab(
+                      text: 'Active',
+                      icon: Icon(
+                        Icons.check_circle_outline,
+                        size: 18,
+                      ),
+                      height: 50,
+                      // child: Text('Active'),
+                    ),
+                    Tab(
+                      text: 'Past',
+                      icon: Icon(
+                        Icons.history,
+                        size: 18,
+                      ),
+                      height: 50,
+                      //  child: Text('Past'),
+                    ),
+                    Tab(
+                      text: 'Cancelled',
+                      icon: Icon(
+                        Icons.cancel_outlined,
+                        size: 18,
+                      ),
+                      height: 50,
+                      // child: Text('Cancelled'),
+                    ),
+                  ]),
+              preferredSize: Size.fromHeight(30.0)),
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            //Tab 1
             RefreshIndicator(
-
-              onRefresh: () async { _onRefresh(1); },
-              child:
-              MyBookingsList.isEmpty || active == false
+              onRefresh: () async {
+                _onRefresh(1);
+              },
+              child: MyBookingsList.isEmpty || active == false
                   ? ListView(
-                    children: [
+                      children: [
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: Column(
                               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                SizedBox(height: 50,),
+                                SizedBox(
+                                  height: 50,
+                                ),
                                 Container(
                                     height: 300,
                                     child: Image.asset(
                                       'assets/images/travel-time.png',
                                     )),
-                                SizedBox(height: 50,),
+                                SizedBox(
+                                  height: 50,
+                                ),
                                 Text(
                                   "Revisit your favourite places",
                                   style: TextStyle(
-                                    fontSize:25,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: 30,),
+                                SizedBox(
+                                  height: 30,
+                                ),
                                 Text(
                                   "Here you will see all your active trips and get inspired for your next ones.",
                                   textAlign: TextAlign.center,
@@ -214,45 +217,44 @@ class _MyBookingsState extends State<MyBookings> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black54),
                                 ),
-                                SizedBox(height: 50,),
+                                SizedBox(
+                                  height: 50,
+                                ),
                                 login == 'guest' || login == null || login == ''
                                     ? ElevatedButton(
-                                      onPressed: () {
-                                        Get.to(() => LoginPage(
-                                              page: 'room',
-                                            ));
-                                      },
-                                      // style: ElevatedButton.styleFrom(
-                                      //   padding: EdgeInsets.symmetric(
-                                      //       horizontal: 40.0,
-                                      //       vertical: 20.0),
-                                      //   backgroundColor:
-                                      //       Colors.transparent,
-                                      //   shadowColor: Colors.transparent,
-                                      //   shape: StadiumBorder(),
-                                      // ),
-                                      child: Text(
-                                        "Sign in",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize:
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    22,
-                                            fontFamily: 'Metropolis',
-                                            fontWeight:
-                                                FontWeight.bold),
-                                      ),
-                                    )
+                                        onPressed: () {
+                                          Get.to(() => LoginPage(
+                                                page: 'room',
+                                              ));
+                                        },
+                                        // style: ElevatedButton.styleFrom(
+                                        //   padding: EdgeInsets.symmetric(
+                                        //       horizontal: 40.0,
+                                        //       vertical: 20.0),
+                                        //   backgroundColor:
+                                        //       Colors.transparent,
+                                        //   shadowColor: Colors.transparent,
+                                        //   shape: StadiumBorder(),
+                                        // ),
+                                        child: Text(
+                                          "Sign in",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  22,
+                                              fontFamily: 'Metropolis',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      )
                                     : Container(),
-
                               ],
                             ),
                           ),
                         ),
                       ],
-                  )
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: AlwaysScrollableScrollPhysics(),
@@ -275,26 +277,25 @@ class _MyBookingsState extends State<MyBookings> {
                         var BookedDate =
                             MyBookingsList[index].bookingdate.toString();
                         var BookDate = DateTime.parse(BookedDate);
-                        var Booked = DateFormat('dd MMM')
-                            .format(BookDate)
-                            .toString();
+                        var Booked =
+                            DateFormat('dd MMM').format(BookDate).toString();
 
-                        return MyBookingsList[index].status == 1 || MyBookingsList[index].status == 4
+                        return MyBookingsList[index].status == 1 ||
+                                MyBookingsList[index].status == 4
                             ? GestureDetector(
                                 onTap: () {
                                   print(MyBookingsList[index].changerequestid);
                                   Get.to(BookedHotelDetailsPage(
-                                    BookingId:
-                                        MyBookingsList[index].bookingid,
+                                    BookingId: MyBookingsList[index].bookingid,
                                     payId: MyBookingsList[index].payid,
                                     cancellationCharge:
                                         MyBookingsList[index].cancelcharge,
-                                    Bookedprice:
-                                        MyBookingsList[index].price,
+                                    Bookedprice: MyBookingsList[index].price,
                                     img: MyBookingsList[index].image,
                                     status: MyBookingsList[index].status,
                                     city: MyBookingsList[index].city,
-                                      changerequestid: MyBookingsList[index].changerequestid,
+                                    changerequestid:
+                                        MyBookingsList[index].changerequestid,
                                     refund: MyBookingsList[index].refund,
                                   ));
                                 },
@@ -303,8 +304,7 @@ class _MyBookingsState extends State<MyBookings> {
                                   child: Container(
                                     // height: 100,
                                     decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(16),
+                                      borderRadius: BorderRadius.circular(16),
                                       gradient: LinearGradient(
                                         colors: [
                                           Color(0xffffffff),
@@ -333,8 +333,7 @@ class _MyBookingsState extends State<MyBookings> {
                                             width: 80,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        8)),
+                                                    BorderRadius.circular(8)),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
@@ -342,60 +341,61 @@ class _MyBookingsState extends State<MyBookings> {
                                                 size: Size.fromRadius(
                                                     8), // Image radius
                                                 child: CachedNetworkImage(
-                                                  imageUrl: MyBookingsList[index].image,
+                                                  imageUrl:
+                                                      MyBookingsList[index]
+                                                          .image,
                                                   fit: BoxFit.cover,
-                                                  placeholder: (context, url) => Center(
-                                                    child: CircularProgressIndicator(),
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
                                                   ),
-                                                  errorWidget: (context, url, error) => Container(
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Container(
                                                     height: 100,
                                                     width: 80,
                                                     decoration: BoxDecoration(
                                                       color: Colors.black,
                                                       image: DecorationImage(
-                                                        image: AssetImage("assets/images/no-img.png"),
+                                                        image: AssetImage(
+                                                            "assets/images/no-img.png"),
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-
                                               ),
                                             ),
                                           ),
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                  top: 10,
-                                                  bottom: 10,
-                                                  left: 8),
+                                                  top: 10, bottom: 10, left: 8),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment
-                                                        .start,
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     "${MyBookingsList[index].hotelname}",
                                                     style: TextStyle(
-                                                        fontSize: screenSize
-                                                                .width /
-                                                            24,
+                                                        fontSize:
+                                                            screenSize.width /
+                                                                24,
                                                         fontWeight:
-                                                            FontWeight
-                                                                .bold),
+                                                            FontWeight.bold),
                                                     maxLines: 2,
-                                                    overflow: TextOverflow
-                                                        .ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                   SizedBox(
                                                     height: 10,
                                                   ),
-                                                  Text(
-                                                      '$CheckIn - $CheckOut',
+                                                  Text('$CheckIn - $CheckOut',
                                                       style: TextStyle(
-                                                        fontSize: screenSize
-                                                                .width /
-                                                            28,
+                                                        fontSize:
+                                                            screenSize.width /
+                                                                28,
                                                       )),
                                                   SizedBox(
                                                     height: 10,
@@ -411,8 +411,8 @@ class _MyBookingsState extends State<MyBookings> {
                                                             fontSize: screenSize
                                                                     .width /
                                                                 28,
-                                                            color: Colors
-                                                                .black54,
+                                                            color:
+                                                                Colors.black54,
                                                           )),
                                                       Text(
                                                           '₹${MyBookingsList[index].price.toStringAsFixed(2)}',
@@ -421,11 +421,9 @@ class _MyBookingsState extends State<MyBookings> {
                                                                     .width /
                                                                 28,
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .bold,
+                                                                FontWeight.bold,
                                                             color: Colors
-                                                                    .purple[
-                                                                400],
+                                                                .purple[400],
                                                           )),
                                                     ],
                                                   ),
@@ -438,15 +436,30 @@ class _MyBookingsState extends State<MyBookings> {
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                          MyBookingsList[index].status == 4 ? 'Pending cancellation' :'Confirm',
+                                                          MyBookingsList[index]
+                                                                      .status ==
+                                                                  4
+                                                              ? 'Pending cancellation'
+                                                              : 'Confirm',
                                                           style: TextStyle(
-                                                              fontSize: MyBookingsList[index].status == 4 ? 12:14,
-                                                              color: MyBookingsList[index].status == 4 ? Colors.orange :Colors.green[400],
+                                                              fontSize:
+                                                                  MyBookingsList[index]
+                                                                              .status ==
+                                                                          4
+                                                                      ? 12
+                                                                      : 14,
+                                                              color: MyBookingsList[
+                                                                              index]
+                                                                          .status ==
+                                                                      4
+                                                                  ? Colors
+                                                                      .orange
+                                                                  : Colors.green[
+                                                                      400],
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold)),
-                                                      Text(
-                                                          'Booked on: $Booked',
+                                                      Text('Booked on: $Booked',
                                                           style: TextStyle(
                                                             fontSize: screenSize
                                                                     .width /
@@ -468,13 +481,14 @@ class _MyBookingsState extends State<MyBookings> {
                       }),
             ),
 
-              //Tab 2
-          RefreshIndicator(
-            onRefresh: () async { _onRefresh(2); },
-            child:
-              MyBookingsList.isEmpty || past == false
+            //Tab 2
+            RefreshIndicator(
+              onRefresh: () async {
+                _onRefresh(2);
+              },
+              child: MyBookingsList.isEmpty || past == false
                   ? ListView(
-                    children: [
+                      children: [
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.all(10),
@@ -482,14 +496,18 @@ class _MyBookingsState extends State<MyBookings> {
                               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 //Spacer(),
-                                SizedBox(height: 50,),
+                                SizedBox(
+                                  height: 50,
+                                ),
                                 Container(
                                     height: 300,
                                     child: Image.asset(
                                       'assets/images/travel-time.png',
                                     )),
-                               // Spacer(),
-                                SizedBox(height: 50,),
+                                // Spacer(),
+                                SizedBox(
+                                  height: 50,
+                                ),
                                 Text(
                                   "Revisit your favourite places",
                                   style: TextStyle(
@@ -498,7 +516,9 @@ class _MyBookingsState extends State<MyBookings> {
                                   ),
                                 ),
                                 //Spacer(),
-                                SizedBox(height: 30,),
+                                SizedBox(
+                                  height: 30,
+                                ),
                                 Text(
                                   "Here you will see all your past trips and get inspired for your next ones.",
                                   textAlign: TextAlign.center,
@@ -510,37 +530,37 @@ class _MyBookingsState extends State<MyBookings> {
                                       color: Colors.black54),
                                 ),
                                 //Spacer(),
-                                SizedBox(height: 50,),
+                                SizedBox(
+                                  height: 50,
+                                ),
                                 login == 'guest' || login == null || login == ''
                                     ? ElevatedButton(
-                                      onPressed: () {
-                                        Get.to(() => LoginPage(
-                                              page: 'room',
-                                            ));
-                                      },
-                                      // style: ElevatedButton.styleFrom(
-                                      //   padding: EdgeInsets.symmetric(
-                                      //       horizontal: 40.0,
-                                      //       vertical: 20.0),
-                                      //   backgroundColor:
-                                      //       Colors.transparent,
-                                      //   shadowColor: Colors.transparent,
-                                      //   shape: StadiumBorder(),
-                                      // ),
-                                      child: Text(
-                                        "Sign in",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize:
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    22,
-                                            fontFamily: 'Metropolis',
-                                            fontWeight:
-                                                FontWeight.bold),
-                                      ),
-                                    )
+                                        onPressed: () {
+                                          Get.to(() => LoginPage(
+                                                page: 'room',
+                                              ));
+                                        },
+                                        // style: ElevatedButton.styleFrom(
+                                        //   padding: EdgeInsets.symmetric(
+                                        //       horizontal: 40.0,
+                                        //       vertical: 20.0),
+                                        //   backgroundColor:
+                                        //       Colors.transparent,
+                                        //   shadowColor: Colors.transparent,
+                                        //   shape: StadiumBorder(),
+                                        // ),
+                                        child: Text(
+                                          "Sign in",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  22,
+                                              fontFamily: 'Metropolis',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      )
                                     : Container(),
                                 //Spacer(),
                               ],
@@ -548,7 +568,7 @@ class _MyBookingsState extends State<MyBookings> {
                           ),
                         ),
                       ],
-                  )
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: AlwaysScrollableScrollPhysics(),
@@ -570,25 +590,23 @@ class _MyBookingsState extends State<MyBookings> {
                         var BookedDate =
                             MyBookingsList[index].bookingdate.toString();
                         var BookDate = DateTime.parse(BookedDate);
-                        var Booked = DateFormat('dd MMM')
-                            .format(BookDate)
-                            .toString();
+                        var Booked =
+                            DateFormat('dd MMM').format(BookDate).toString();
 
                         return MyBookingsList[index].status == 2
                             ? GestureDetector(
                                 onTap: () {
                                   Get.to(BookedHotelDetailsPage(
-                                    BookingId:
-                                        MyBookingsList[index].bookingid,
+                                    BookingId: MyBookingsList[index].bookingid,
                                     payId: MyBookingsList[index].payid,
                                     cancellationCharge:
                                         MyBookingsList[index].cancelcharge,
-                                    Bookedprice:
-                                        MyBookingsList[index].price,
+                                    Bookedprice: MyBookingsList[index].price,
                                     img: MyBookingsList[index].image,
                                     status: MyBookingsList[index].status,
                                     city: MyBookingsList[index].city,
-                                    changerequestid: MyBookingsList[index].changerequestid,
+                                    changerequestid:
+                                        MyBookingsList[index].changerequestid,
                                     refund: MyBookingsList[index].refund,
                                   ));
                                 },
@@ -597,8 +615,7 @@ class _MyBookingsState extends State<MyBookings> {
                                   child: Container(
                                     // height: 100,
                                     decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(16),
+                                      borderRadius: BorderRadius.circular(16),
                                       gradient: LinearGradient(
                                         colors: [
                                           Color(0xffffffff),
@@ -627,8 +644,7 @@ class _MyBookingsState extends State<MyBookings> {
                                             width: 80,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        8)),
+                                                    BorderRadius.circular(8)),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
@@ -636,60 +652,61 @@ class _MyBookingsState extends State<MyBookings> {
                                                 size: Size.fromRadius(
                                                     8), // Image radius
                                                 child: CachedNetworkImage(
-                                                  imageUrl: MyBookingsList[index].image,
+                                                  imageUrl:
+                                                      MyBookingsList[index]
+                                                          .image,
                                                   fit: BoxFit.cover,
-                                                  placeholder: (context, url) => Center(
-                                                    child: CircularProgressIndicator(),
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
                                                   ),
-                                                  errorWidget: (context, url, error) => Container(
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Container(
                                                     height: 100,
                                                     width: 80,
                                                     decoration: BoxDecoration(
                                                       color: Colors.black,
                                                       image: DecorationImage(
-                                                        image: AssetImage("assets/images/no-img.png"),
+                                                        image: AssetImage(
+                                                            "assets/images/no-img.png"),
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-
                                               ),
                                             ),
                                           ),
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                  top: 10,
-                                                  bottom: 10,
-                                                  left: 8),
+                                                  top: 10, bottom: 10, left: 8),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment
-                                                        .start,
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     "${MyBookingsList[index].hotelname}",
                                                     style: TextStyle(
-                                                        fontSize: screenSize
-                                                                .width /
-                                                            24,
+                                                        fontSize:
+                                                            screenSize.width /
+                                                                24,
                                                         fontWeight:
-                                                            FontWeight
-                                                                .bold),
+                                                            FontWeight.bold),
                                                     maxLines: 2,
-                                                    overflow: TextOverflow
-                                                        .ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                   SizedBox(
                                                     height: 10,
                                                   ),
-                                                  Text(
-                                                      '$CheckIn - $CheckOut',
+                                                  Text('$CheckIn - $CheckOut',
                                                       style: TextStyle(
-                                                        fontSize: screenSize
-                                                                .width /
-                                                            28,
+                                                        fontSize:
+                                                            screenSize.width /
+                                                                28,
                                                       )),
                                                   SizedBox(
                                                     height: 10,
@@ -705,8 +722,8 @@ class _MyBookingsState extends State<MyBookings> {
                                                             fontSize: screenSize
                                                                     .width /
                                                                 28,
-                                                            color: Colors
-                                                                .black54,
+                                                            color:
+                                                                Colors.black54,
                                                           )),
                                                       Text(
                                                           '₹${MyBookingsList[index].price.toStringAsFixed(2)}',
@@ -715,11 +732,9 @@ class _MyBookingsState extends State<MyBookings> {
                                                                     .width /
                                                                 28,
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .bold,
+                                                                FontWeight.bold,
                                                             color: Colors
-                                                                    .purple[
-                                                                400],
+                                                                .purple[400],
                                                           )),
                                                     ],
                                                   ),
@@ -733,16 +748,15 @@ class _MyBookingsState extends State<MyBookings> {
                                                     children: [
                                                       Text('Expired',
                                                           style: TextStyle(
-                                                              fontSize:
-                                                                  screenSize.width /
-                                                                      28,
+                                                              fontSize: screenSize
+                                                                      .width /
+                                                                  28,
                                                               color: Colors
                                                                   .black54,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold)),
-                                                      Text(
-                                                          'Booked on: $Booked',
+                                                      Text('Booked on: $Booked',
                                                           style: TextStyle(
                                                             fontSize: screenSize
                                                                     .width /
@@ -872,28 +886,33 @@ class _MyBookingsState extends State<MyBookings> {
                               )
                             : Container();
                       }),
-          ),
+            ),
 
-              //Tab 3
-              RefreshIndicator(
-                onRefresh: () async { _onRefresh(1); },
-                child:
-              MyBookingsList.isEmpty || cancelled == false
+            //Tab 3
+            RefreshIndicator(
+              onRefresh: () async {
+                _onRefresh(1);
+              },
+              child: MyBookingsList.isEmpty || cancelled == false
                   ? ListView(
-                    children: [
+                      children: [
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: Column(
                               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                SizedBox(height: 50,),
+                                SizedBox(
+                                  height: 50,
+                                ),
                                 Container(
                                     height: 300,
                                     child: Image.asset(
                                       'assets/images/travel-time.png',
                                     )),
-                                SizedBox(height: 50,),
+                                SizedBox(
+                                  height: 50,
+                                ),
                                 Text(
                                   "Revisit your favourite places",
                                   style: TextStyle(
@@ -901,7 +920,9 @@ class _MyBookingsState extends State<MyBookings> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: 30,),
+                                SizedBox(
+                                  height: 30,
+                                ),
                                 Text(
                                   "Here you will see all your cancelled trips and get inspired for your next ones.",
                                   textAlign: TextAlign.center,
@@ -912,45 +933,44 @@ class _MyBookingsState extends State<MyBookings> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black54),
                                 ),
-                                SizedBox(height: 50,),
+                                SizedBox(
+                                  height: 50,
+                                ),
                                 login == 'guest' || login == null || login == ''
                                     ? ElevatedButton(
-                                      onPressed: () {
-                                        Get.to(() => LoginPage(
-                                              page: 'room',
-                                            ));
-                                      },
-                                      // style: ElevatedButton.styleFrom(
-                                      //   padding: EdgeInsets.symmetric(
-                                      //       horizontal: 40.0,
-                                      //       vertical: 20.0),
-                                      //   backgroundColor:
-                                      //       Colors.transparent,
-                                      //   shadowColor: Colors.transparent,
-                                      //   shape: StadiumBorder(),
-                                      // ),
-                                      child: Text(
-                                        "Sign in",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize:
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    22,
-                                            fontFamily: 'Metropolis',
-                                            fontWeight:
-                                                FontWeight.bold),
-                                      ),
-                                    )
+                                        onPressed: () {
+                                          Get.to(() => LoginPage(
+                                                page: 'room',
+                                              ));
+                                        },
+                                        // style: ElevatedButton.styleFrom(
+                                        //   padding: EdgeInsets.symmetric(
+                                        //       horizontal: 40.0,
+                                        //       vertical: 20.0),
+                                        //   backgroundColor:
+                                        //       Colors.transparent,
+                                        //   shadowColor: Colors.transparent,
+                                        //   shape: StadiumBorder(),
+                                        // ),
+                                        child: Text(
+                                          "Sign in",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  22,
+                                              fontFamily: 'Metropolis',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      )
                                     : Container(),
-
                               ],
                             ),
                           ),
                         ),
                       ],
-                  )
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: AlwaysScrollableScrollPhysics(),
@@ -972,25 +992,23 @@ class _MyBookingsState extends State<MyBookings> {
                         var BookedDate =
                             MyBookingsList[index].bookingdate.toString();
                         var BookDate = DateTime.parse(BookedDate);
-                        var Booked = DateFormat('dd MMM')
-                            .format(BookDate)
-                            .toString();
+                        var Booked =
+                            DateFormat('dd MMM').format(BookDate).toString();
 
                         return MyBookingsList[index].status == 3
                             ? GestureDetector(
                                 onTap: () {
                                   Get.to(BookedHotelDetailsPage(
-                                    BookingId:
-                                        MyBookingsList[index].bookingid,
+                                    BookingId: MyBookingsList[index].bookingid,
                                     payId: MyBookingsList[index].payid,
                                     cancellationCharge:
                                         MyBookingsList[index].cancelcharge,
-                                    Bookedprice:
-                                        MyBookingsList[index].price,
+                                    Bookedprice: MyBookingsList[index].price,
                                     img: MyBookingsList[index].image,
                                     status: MyBookingsList[index].status,
                                     city: MyBookingsList[index].city,
-                                    changerequestid: MyBookingsList[index].changerequestid,
+                                    changerequestid:
+                                        MyBookingsList[index].changerequestid,
                                     refund: MyBookingsList[index].refund,
                                   ));
                                 },
@@ -999,8 +1017,7 @@ class _MyBookingsState extends State<MyBookings> {
                                   child: Container(
                                     // height: 100,
                                     decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(16),
+                                      borderRadius: BorderRadius.circular(16),
                                       gradient: LinearGradient(
                                         colors: [
                                           Color(0xffffffff),
@@ -1029,8 +1046,7 @@ class _MyBookingsState extends State<MyBookings> {
                                             width: 80,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        8)),
+                                                    BorderRadius.circular(8)),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
@@ -1038,60 +1054,61 @@ class _MyBookingsState extends State<MyBookings> {
                                                 size: Size.fromRadius(
                                                     8), // Image radius
                                                 child: CachedNetworkImage(
-                                                  imageUrl: MyBookingsList[index].image,
+                                                  imageUrl:
+                                                      MyBookingsList[index]
+                                                          .image,
                                                   fit: BoxFit.cover,
-                                                  placeholder: (context, url) => Center(
-                                                    child: CircularProgressIndicator(),
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
                                                   ),
-                                                  errorWidget: (context, url, error) => Container(
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Container(
                                                     height: 100,
                                                     width: 80,
                                                     decoration: BoxDecoration(
                                                       color: Colors.black,
                                                       image: DecorationImage(
-                                                        image: AssetImage("assets/images/no-img.png"),
+                                                        image: AssetImage(
+                                                            "assets/images/no-img.png"),
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-
                                               ),
                                             ),
                                           ),
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                  top: 10,
-                                                  bottom: 10,
-                                                  left: 8),
+                                                  top: 10, bottom: 10, left: 8),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment
-                                                        .start,
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     "${MyBookingsList[index].hotelname}",
                                                     style: TextStyle(
-                                                        fontSize: screenSize
-                                                                .width /
-                                                            24,
+                                                        fontSize:
+                                                            screenSize.width /
+                                                                24,
                                                         fontWeight:
-                                                            FontWeight
-                                                                .bold),
+                                                            FontWeight.bold),
                                                     maxLines: 2,
-                                                    overflow: TextOverflow
-                                                        .ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                   SizedBox(
                                                     height: 10,
                                                   ),
-                                                  Text(
-                                                      '$CheckIn - $CheckOut',
+                                                  Text('$CheckIn - $CheckOut',
                                                       style: TextStyle(
-                                                        fontSize: screenSize
-                                                                .width /
-                                                            28,
+                                                        fontSize:
+                                                            screenSize.width /
+                                                                28,
                                                       )),
                                                   SizedBox(
                                                     height: 10,
@@ -1107,8 +1124,8 @@ class _MyBookingsState extends State<MyBookings> {
                                                             fontSize: screenSize
                                                                     .width /
                                                                 28,
-                                                            color: Colors
-                                                                .black54,
+                                                            color:
+                                                                Colors.black54,
                                                           )),
                                                       Text(
                                                           '₹${MyBookingsList[index].price.toStringAsFixed(2)}',
@@ -1117,11 +1134,9 @@ class _MyBookingsState extends State<MyBookings> {
                                                                     .width /
                                                                 28,
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .bold,
+                                                                FontWeight.bold,
                                                             color: Colors
-                                                                    .purple[
-                                                                400],
+                                                                .purple[400],
                                                           )),
                                                     ],
                                                   ),
@@ -1135,17 +1150,15 @@ class _MyBookingsState extends State<MyBookings> {
                                                     children: [
                                                       Text('Cancelled',
                                                           style: TextStyle(
-                                                              fontSize:
-                                                                  screenSize
-                                                                          .width /
-                                                                      28,
+                                                              fontSize: screenSize
+                                                                      .width /
+                                                                  28,
                                                               color: Colors
                                                                   .red[400],
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold)),
-                                                      Text(
-                                                          'Booked on: $Booked',
+                                                      Text('Booked on: $Booked',
                                                           style: TextStyle(
                                                             fontSize: screenSize
                                                                     .width /
@@ -1165,15 +1178,15 @@ class _MyBookingsState extends State<MyBookings> {
                               )
                             : Container();
                       }),
-      ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   getBookings(int tab) async {
-    try{
+    try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var loginMethod = prefs.getString('login');
       var email = prefs.getString('email');
@@ -1188,53 +1201,50 @@ class _MyBookingsState extends State<MyBookings> {
       );
       log(response.body);
       print(response.statusCode);
-if(response.statusCode == 200){
+      if (response.statusCode == 200) {
+        if (response.body.contains('"status":1') ||
+            response.body.contains('"status":4')) {
+          setState(() {
+            active = true;
+          });
+        }
+        if (response.body.contains('"status":2')) {
+          setState(() {
+            past = true;
+          });
+        }
+        if (response.body.contains('"status":3')) {
+          setState(() {
+            cancelled = true;
+          });
+        }
 
-  if (response.body.contains('"status":1') || response.body.contains('"status":4')) {
-    setState(() {
-      active = true;
-    });
-  }
-  if (response.body.contains('"status":2')) {
-    setState(() {
-      past = true;
-    });
-  }
-  if (response.body.contains('"status":3')) {
-    setState(() {
-      cancelled = true;
-    });
-  }
-
-  var details = json.decode(response.body);
-  details.forEach((element) {
-    setState(() {
-      MyBookingsList.add(BookingStatus.fromJson(element));
-    });
-  });
-
-
-}else{
-  Fluttertoast.showToast(
-      msg: "${response.statusCode}: Can't get details!",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Color(0x23000000),
-      textColor: Colors.white,
-      fontSize: 16.0);
-  setState(() {
-    // if (tab == 1) {
-    //   _refreshController1.loadFailed();
-    // } else if (tab == 2) {
-    //   _refreshController2.loadFailed();
-    // } else if (tab == 3) {
-    //   _refreshController3.loadFailed();
-    // }
-  });
-}
-
-    }catch(e){
+        var details = json.decode(response.body);
+        details.forEach((element) {
+          setState(() {
+            MyBookingsList.add(BookingStatus.fromJson(element));
+          });
+        });
+      } else {
+        Fluttertoast.showToast(
+            msg: "${response.statusCode}: Can't get details!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Color(0x23000000),
+            textColor: Colors.white,
+            fontSize: 16.0);
+        setState(() {
+          // if (tab == 1) {
+          //   _refreshController1.loadFailed();
+          // } else if (tab == 2) {
+          //   _refreshController2.loadFailed();
+          // } else if (tab == 3) {
+          //   _refreshController3.loadFailed();
+          // }
+        });
+      }
+    } catch (e) {
       Fluttertoast.showToast(
           msg: "${e}",
           toastLength: Toast.LENGTH_SHORT,
@@ -1266,7 +1276,5 @@ if(response.statusCode == 200){
         // }
       });
     }
-
-
   }
 }

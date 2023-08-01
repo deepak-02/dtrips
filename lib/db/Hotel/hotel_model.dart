@@ -134,6 +134,7 @@ class HotelResult {
     this.hotelLocation,
     this.supplierPrice,
     this.roomDetails,
+    this.hotelInfo,
   });
 
   bool? isHotDeal;
@@ -157,6 +158,7 @@ class HotelResult {
   dynamic hotelLocation;
   dynamic supplierPrice;
   List<dynamic>? roomDetails;
+  dynamic hotelInfo;
 
   factory HotelResult.fromJson(Map<String, dynamic> json) => HotelResult(
         isHotDeal: json["IsHotDeal"],
@@ -183,6 +185,7 @@ class HotelResult {
         hotelLocation: json["HotelLocation"],
         supplierPrice: json["SupplierPrice"],
         roomDetails: List<dynamic>.from(json["RoomDetails"]!.map((x) => x)),
+        hotelInfo: json["HotelInfo"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -208,6 +211,51 @@ class HotelResult {
         "HotelLocation": hotelLocation,
         "SupplierPrice": supplierPrice,
         "RoomDetails": List<dynamic>.from(roomDetails!.map((x) => x)),
+        "HotelInfo": hotelInfo,
+      };
+}
+
+class HotelInfoClass {
+  String? cityid;
+  dynamic starRating;
+  List<String>? images;
+  dynamic hotelAddress;
+  String? hotelCode;
+  String? hotelName;
+  dynamic longitude;
+  dynamic latitude;
+
+  HotelInfoClass({
+    this.cityid,
+    this.starRating,
+    this.images,
+    this.hotelAddress,
+    this.hotelCode,
+    this.hotelName,
+    this.longitude,
+    this.latitude,
+  });
+
+  factory HotelInfoClass.fromJson(Map<String, dynamic> json) => HotelInfoClass(
+        cityid: json["cityid"],
+        starRating: json["starRating"],
+        images: List<String>.from(json["images"].map((x) => x)),
+        hotelAddress: json["hotelAddress"],
+        hotelCode: json["hotelCode"],
+        hotelName: json["hotelName"],
+        longitude: json["longitude"]?.toDouble(),
+        latitude: json["latitude"]?.toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "cityid": cityid,
+        "starRating": starRating,
+        "images": List<dynamic>.from(images!.map((x) => x)),
+        "hotelAddress": hotelAddress,
+        "hotelCode": hotelCode,
+        "hotelName": hotelName,
+        "longitude": longitude,
+        "latitude": latitude,
       };
 }
 

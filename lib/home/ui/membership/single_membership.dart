@@ -161,7 +161,7 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                               width: screenSize.width,
                             ),
                             FittedBox(
-                              child: IntrinsicHeight (
+                              child: IntrinsicHeight(
                                 child: Row(
                                   children: [
                                     Container(
@@ -201,7 +201,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                     style: TextStyle(
                                                       fontSize:
                                                           screenSize.width / 24,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                 )
@@ -217,8 +218,9 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 3, right: 2),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3, right: 2),
                                                   child: Icon(
                                                     Icons.circle_outlined,
                                                     size: 10,
@@ -245,8 +247,9 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 3, right: 2),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3, right: 2),
                                                   child: Icon(
                                                     Icons.circle_outlined,
                                                     size: 10,
@@ -282,7 +285,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                             Text(
                                               "Grey",
                                               style: TextStyle(
-                                                  fontSize: screenSize.width / 20,
+                                                  fontSize:
+                                                      screenSize.width / 20,
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             SizedBox(
@@ -300,7 +304,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                     style: TextStyle(
                                                       fontSize:
                                                           screenSize.width / 24,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                 )
@@ -316,8 +321,9 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 3, right: 2),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3, right: 2),
                                                   child: Icon(
                                                     Icons.circle_outlined,
                                                     size: 10,
@@ -344,8 +350,9 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 3, right: 2),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3, right: 2),
                                                   child: Icon(
                                                     Icons.circle_outlined,
                                                     size: 10,
@@ -381,7 +388,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                             Text(
                                               "Onyx",
                                               style: TextStyle(
-                                                  fontSize: screenSize.width / 20,
+                                                  fontSize:
+                                                      screenSize.width / 20,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white),
                                             ),
@@ -399,7 +407,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                     "5 trips with Dtrips",
                                                     style: TextStyle(
                                                         fontSize:
-                                                            screenSize.width / 24,
+                                                            screenSize.width /
+                                                                24,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         color: Colors.white),
@@ -417,8 +426,9 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 3, right: 2),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3, right: 2),
                                                   child: Icon(
                                                     Icons.circle_outlined,
                                                     size: 10,
@@ -430,7 +440,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                     "Domestic and up to 5% on international flights",
                                                     style: TextStyle(
                                                         fontSize:
-                                                            screenSize.width / 26,
+                                                            screenSize.width /
+                                                                26,
                                                         color: Colors.white),
                                                   ),
                                                 ),
@@ -446,8 +457,9 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 3, right: 2),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3, right: 2),
                                                   child: Icon(
                                                     Icons.circle_outlined,
                                                     size: 10,
@@ -459,7 +471,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                     "Up to 40% on over 75,000 hotels",
                                                     style: TextStyle(
                                                         fontSize:
-                                                            screenSize.width / 26,
+                                                            screenSize.width /
+                                                                26,
                                                         color: Colors.white),
                                                   ),
                                                 ),
@@ -487,7 +500,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                             Text(
                                               "Black",
                                               style: TextStyle(
-                                                  fontSize: screenSize.width / 20,
+                                                  fontSize:
+                                                      screenSize.width / 20,
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -505,7 +519,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                     "20 trips with Dtrips",
                                                     style: TextStyle(
                                                         fontSize:
-                                                            screenSize.width / 24,
+                                                            screenSize.width /
+                                                                24,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         color: Colors.white),
@@ -523,8 +538,9 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 3, right: 2),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3, right: 2),
                                                   child: Icon(
                                                     Icons.circle_outlined,
                                                     size: 10,
@@ -536,7 +552,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                     "Domestic and up to 10% on international flights",
                                                     style: TextStyle(
                                                         fontSize:
-                                                            screenSize.width / 26,
+                                                            screenSize.width /
+                                                                26,
                                                         color: Colors.white),
                                                   ),
                                                 ),
@@ -552,8 +569,9 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 3, right: 2),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3, right: 2),
                                                   child: Icon(
                                                     Icons.circle_outlined,
                                                     size: 10,
@@ -564,7 +582,8 @@ class _SingleMembershipPageState extends State<SingleMembershipPage> {
                                                     "Up to 50% on over 10,000 hotels",
                                                     style: TextStyle(
                                                         fontSize:
-                                                            screenSize.width / 26,
+                                                            screenSize.width /
+                                                                26,
                                                         color: Colors.white),
                                                   ),
                                                 ),

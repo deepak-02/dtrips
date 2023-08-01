@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class HotelGallery extends StatefulWidget {
@@ -29,35 +29,33 @@ class _HotelGalleryState extends State<HotelGallery> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton:
-         Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: InkWell(
-                onTap: () => Get.back(),
-                child: CircleAvatar(
-                  radius: 15,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.arrow_back,
-                    size: 25,
-                    color: Colors.black,
-                  ),
-                ),
-                //Icon(Icons.arrow_back,size: 30,color: Colors.black,),
-              ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(top: 5),
+        child: InkWell(
+          onTap: () => Get.back(),
+          child: const CircleAvatar(
+            radius: 15,
+            backgroundColor: Colors.white,
+            child: Icon(
+              Icons.arrow_back,
+              size: 25,
+              color: Colors.black,
             ),
+          ),
+          //Icon(Icons.arrow_back,size: 30,color: Colors.black,),
+        ),
+      ),
       body: Scaffold(
         body: Center(
-          child:
-          GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, // Adjust the number of columns as per your preference
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount:
+                  3, // Adjust the number of columns as per your preference
               // mainAxisSpacing: 8.0,
               // crossAxisSpacing: 8.0,
             ),
             itemCount: listOfUrls.length,
             itemBuilder: (BuildContext context, int index) {
-
               final img = listOfUrls[index];
               var imageProvider = Image.network(listOfUrls[index]).image;
 
@@ -69,13 +67,10 @@ class _HotelGalleryState extends State<HotelGallery> {
                     setState(() {
                       selectedImageIndex = index;
                     });
-                    showImageViewer(
-                        context,
-                        imageProvider,
+                    showImageViewer(context, imageProvider,
                         doubleTapZoomable: true,
                         swipeDismissible: true,
-                        backgroundColor: Colors.black26,
-                        onViewerDismissed: () {
+                        backgroundColor: Colors.black26, onViewerDismissed: () {
                       print("dismissed");
                     });
                     // Navigator.push(
@@ -90,22 +85,15 @@ class _HotelGalleryState extends State<HotelGallery> {
                   child: GridTile(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        listOfUrls[index],
+                      child: CachedNetworkImage(
+                        imageUrl: listOfUrls[index],
+                        cacheKey: 'img${listOfUrls[index]}',
                         fit: BoxFit.cover,
-                        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          );
-                        },
-
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
                   ),

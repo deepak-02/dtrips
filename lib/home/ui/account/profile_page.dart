@@ -303,7 +303,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               // getMembership();
                               showModalBottomSheet<void>(
                                 context: context,
-                                  // backgroundColor: Colors.white,
+                                // backgroundColor: Colors.white,
                                 builder: (BuildContext context) {
                                   return Container(
                                     color: Colors.white,
@@ -341,7 +341,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                                           FontWeight.bold),
                                                 ),
                                                 CircleAvatar(
-                                                  backgroundColor: Colors.purple,
+                                                  backgroundColor:
+                                                      Colors.purple,
                                                   radius: 12,
                                                   child: Icon(
                                                     Icons
@@ -496,7 +497,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                                                 fontSize: screenSize
                                                                         .width /
                                                                     22,
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                             ),
                                                           ),
@@ -644,7 +646,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                                                 fontSize: screenSize
                                                                         .width /
                                                                     22,
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                             ),
                                                           ),
@@ -792,7 +795,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                                                 fontSize: screenSize
                                                                         .width /
                                                                     22,
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                             ),
                                                           ),

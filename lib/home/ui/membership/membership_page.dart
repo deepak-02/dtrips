@@ -206,7 +206,7 @@ class _MembershipPageState extends State<MembershipPage> {
                               children: [
                                 Container(
                                   width: screenSize.width / 4,
-                                 // height: screenSize.height / 2.5,
+                                  // height: screenSize.height / 2.5,
                                   decoration: BoxDecoration(
                                     color: Color(0xFFFFFFFF),
                                     borderRadius: BorderRadius.only(
@@ -239,7 +239,8 @@ class _MembershipPageState extends State<MembershipPage> {
                                               child: Text(
                                                 "Sign up",
                                                 style: TextStyle(
-                                                  fontSize: screenSize.width / 24,
+                                                  fontSize:
+                                                      screenSize.width / 24,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -267,7 +268,8 @@ class _MembershipPageState extends State<MembershipPage> {
                                               child: Text(
                                                 "Up to 5% on selected domestic and international flights",
                                                 style: TextStyle(
-                                                  fontSize: screenSize.width / 26,
+                                                  fontSize:
+                                                      screenSize.width / 26,
                                                 ),
                                               ),
                                             ),
@@ -294,7 +296,8 @@ class _MembershipPageState extends State<MembershipPage> {
                                               child: Text(
                                                 "Up to 20% on over 10,000 hotels",
                                                 style: TextStyle(
-                                                  fontSize: screenSize.width / 26,
+                                                  fontSize:
+                                                      screenSize.width / 26,
                                                 ),
                                               ),
                                             ),
@@ -335,7 +338,8 @@ class _MembershipPageState extends State<MembershipPage> {
                                               child: Text(
                                                 "2 trips with Dtrips",
                                                 style: TextStyle(
-                                                  fontSize: screenSize.width / 24,
+                                                  fontSize:
+                                                      screenSize.width / 24,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -363,7 +367,8 @@ class _MembershipPageState extends State<MembershipPage> {
                                               child: Text(
                                                 "Domestic and up to 5% on international flights",
                                                 style: TextStyle(
-                                                  fontSize: screenSize.width / 26,
+                                                  fontSize:
+                                                      screenSize.width / 26,
                                                 ),
                                               ),
                                             ),
@@ -390,7 +395,8 @@ class _MembershipPageState extends State<MembershipPage> {
                                               child: Text(
                                                 "Up to 30% on over 25,000 hotels",
                                                 style: TextStyle(
-                                                  fontSize: screenSize.width / 26,
+                                                  fontSize:
+                                                      screenSize.width / 26,
                                                 ),
                                               ),
                                             ),

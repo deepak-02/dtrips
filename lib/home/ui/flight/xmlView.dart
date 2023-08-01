@@ -14,14 +14,17 @@ class XMLContentWidget extends StatelessWidget {
         backgroundColor: Colors.purple,
         leading: IconButton(
           tooltip: 'back',
-          icon: Icon(Icons.arrow_back,color: Colors.white,),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Get.back();
           },
         ),
         title: Text(
           "Fare rule",
-          style: TextStyle(fontSize: 16,color: Colors.white),
+          style: TextStyle(fontSize: 16, color: Colors.white),
         ),
       ),
       body: SafeArea(

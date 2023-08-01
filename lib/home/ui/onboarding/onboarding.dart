@@ -161,9 +161,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               child: Text(
                                 "Join Our Club",
                                 style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white
-                                ),
+                                    fontSize: 20, color: Colors.white),
                               )),
                         ),
                         SizedBox(
@@ -196,10 +194,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             },
                             child: Text(
                               "Explore as a guest",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.purple
-                              ),
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.purple),
                             ),
                           ),
                         ),

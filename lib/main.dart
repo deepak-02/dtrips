@@ -1,10 +1,9 @@
 import 'package:dart_ipify/dart_ipify.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'home/global.dart';
 import 'home/ui/dashboard.dart';
 import 'home/ui/onboarding/onboarding.dart';
@@ -27,7 +26,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     getIp();
@@ -36,7 +34,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       //color set to transperent or set your own color
       statusBarIconBrightness: Brightness.dark,
@@ -49,14 +47,12 @@ class _MyAppState extends State<MyApp> {
         fontFamily: 'Metropolis',
         primarySwatch: Colors.purple,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        dialogTheme: DialogTheme(
-          backgroundColor: Colors.white,
-            surfaceTintColor: Colors.white
-        ),
+        dialogTheme: const DialogTheme(
+            backgroundColor: Colors.white, surfaceTintColor: Colors.white),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             backgroundColor:
-            MaterialStateProperty.all<Color>(Color(0xff92278f)),
+                MaterialStateProperty.all<Color>(const Color(0xff92278f)),
           ),
         ),
         useMaterial3: true,
@@ -71,7 +67,6 @@ class _MyAppState extends State<MyApp> {
       // print(ipv4); // 98.207.254.136
 
       //test
-      SharedPreferences prefs = await SharedPreferences.getInstance();
 
       setState(() {
         setIp(ipv4);
@@ -79,8 +74,10 @@ class _MyAppState extends State<MyApp> {
         // print(ip);
       });
       // The response type can be text, json or jsonp  117.193.168.171
-    }catch(e){
-      print(e);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -89,7 +86,4 @@ class _MyAppState extends State<MyApp> {
 
     prefs.setString('ip', ipv4);
   }
-
 }
-
-

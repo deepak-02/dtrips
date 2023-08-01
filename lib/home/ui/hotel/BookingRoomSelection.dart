@@ -308,7 +308,7 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                         ],
                                       ),
                                     )
-                                  : checkLogin();
+                                  : reserveRooms();
                               //reserveRooms();
                               // apiCall();
                             },
@@ -425,11 +425,10 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                                         maxLines: 3,
                                                         style: TextStyle(
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .bold,
+                                                                FontWeight.bold,
                                                             fontSize: 16,
-                                                            color: Colors
-                                                                .purple),
+                                                            color:
+                                                                Colors.purple),
                                                       ),
                                                     ),
                                                     // Icon(Icons.info_outline,size: 30,color: Colors.purple,),
@@ -449,7 +448,10 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                                       width: 10,
                                                     ),
                                                     Flexible(
-                                                      child: Html(data: hotelRoomDetails[index].roomDescription),
+                                                      child: Html(
+                                                          data: hotelRoomDetails[
+                                                                  index]
+                                                              .roomDescription),
                                                       // Text(
                                                       //   "${hotelRoomDetails[index].roomDescription}",
                                                       //   maxLines: 3,
@@ -635,7 +637,7 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                                                                   Text(
                                                                                     "Charge: ${hotelRoomDetails[index].cancellationPolicies![Index].charge}",
                                                                                     maxLines: 2,
-                                                                                  //  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.green),
+                                                                                    //  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.green),
                                                                                   ),
                                                                                 ],
                                                                               ),
@@ -688,7 +690,7 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                                                                   Text(
                                                                                     "From: ${hotelRoomDetails[index].cancellationPolicies![Index].fromDate}",
                                                                                     maxLines: 2,
-                                                                                  //  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.green),
+                                                                                    //  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.green),
                                                                                   ),
                                                                                 ],
                                                                               ),
@@ -707,7 +709,7 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                                                                   Text(
                                                                                     "To: ${hotelRoomDetails[index].cancellationPolicies![Index].toDate}",
                                                                                     maxLines: 2,
-                                                                                   // style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.green),
+                                                                                    // style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.green),
                                                                                   ),
                                                                                 ],
                                                                               ),
@@ -731,13 +733,16 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                                       Icon(
                                                         Icons.check,
                                                         size: 16,
-                                                       // color: Colors.green,
+                                                        // color: Colors.green,
                                                       ),
                                                       SizedBox(
                                                         width: 10,
                                                       ),
                                                       Flexible(
-                                                        child: Html(data: hotelRoomDetails[index].cancellationPolicy),
+                                                        child: Html(
+                                                            data: hotelRoomDetails[
+                                                                    index]
+                                                                .cancellationPolicy),
                                                         // Text(
                                                         //   "${hotelRoomDetails[index].cancellationPolicy!.replaceAll("#^#", '.\n').replaceAll("|#!#", '')}",
                                                         //   maxLines: 6,
@@ -832,8 +837,7 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                                                 margin: EdgeInsets
                                                                     .all(10.0),
                                                                 child: Wrap(
-                                                                  children: <
-                                                                      Widget>[
+                                                                  children: <Widget>[
                                                                     Center(
                                                                         child: Container(
                                                                             height:
@@ -1128,8 +1132,13 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                                               //     ? passport =
                                                               //         true
                                                               //     : passport = false;
-                                                              passport =  hotelRoomDetails[index].isPassportMandatory!;
-                                                              pan = hotelRoomDetails[index].isPanMandatory!;
+                                                              passport =
+                                                                  hotelRoomDetails[
+                                                                          index]
+                                                                      .isPassportMandatory!;
+                                                              pan = hotelRoomDetails[
+                                                                      index]
+                                                                  .isPanMandatory!;
                                                               // hotelRoomDetails[
                                                               //                 index]
                                                               //             .isPanMandatory ==
@@ -1137,10 +1146,11 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                                               //     ? pan = true
                                                               //     : pan = false;
 
-                                                              print("pan: $pan");
+                                                              print(
+                                                                  "pan: $pan");
 
-                                                              print("pan: ${hotelRoomDetails[index].isPanMandatory}");
-
+                                                              print(
+                                                                  "pan: ${hotelRoomDetails[index].isPanMandatory}");
 
                                                               print(
                                                                   "passport: $passport");
@@ -1206,9 +1216,12 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
                                                               // roo1 = selectedRooms.toJSON();
                                                               // roo2 = details.toJSON();
 
-                                                              double roomofferedPrice = hotelRoomDetails[
-                                                              index]
-                                                                  .price!.offeredPrice;
+                                                              double
+                                                                  roomofferedPrice =
+                                                                  hotelRoomDetails[
+                                                                          index]
+                                                                      .price!
+                                                                      .offeredPrice;
 
                                                               double roomprice =
                                                                   hotelRoomDetails[
@@ -1227,12 +1240,15 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
 
                                                               active.contains(
                                                                       index)
-                                                                  ? offeredPrice = (offeredPrice +
-                                                                  roomofferedPrice)
-                                                                  : offeredPrice = (offeredPrice -
-                                                                  roomofferedPrice);
+                                                                  ? offeredPrice =
+                                                                      (offeredPrice +
+                                                                          roomofferedPrice)
+                                                                  : offeredPrice =
+                                                                      (offeredPrice -
+                                                                          roomofferedPrice);
                                                               active.length == 0
-                                                                  ? offeredPrice = 0
+                                                                  ? offeredPrice =
+                                                                      0
                                                                   : null;
 
                                                               double roomTax =
@@ -1369,8 +1385,7 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           icon: Container(
             height: 100,
-            child:
-            Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
+            child: Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
           ),
           title: Text(
             "OOPS! There is an internal server error occoured",
@@ -1442,7 +1457,6 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
       // print(roomCombinationsArray.toJSON());
 
       if (response.body.contains('Your session (TraceId) is expired')) {
-
         showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -1480,89 +1494,89 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
     }
   }
 
-  checkLogin() {
-    loginMethod == null || loginMethod == 'guest'
-        ? showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              icon: Container(
-                height: 100,
-                child: Lottie.asset('assets/lottie/info.json',
-                    fit: BoxFit.contain),
-              ),
-              title: Text(
-                "Login to continue",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'Metropolis',
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-              content: Text(
-                "Login or Create an account to book rooms.\nGet more features and access our exclusive deals and offers.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Metropolis',
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500),
-              ),
-              actions: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                      onPressed: () => Get.back(),
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(
-                            color: Color(0xff92278f),
-                            fontFamily: 'Metropolis',
-                            fontWeight: FontWeight.bold),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          side: BorderSide(
-                            color: Color(0xff92278f),
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => Get.to(() => LoginPage(
-                            page: 'room',
-                          )),
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(
-                            color: Color(0xffffffff),
-                            fontFamily: 'Metropolis',
-                            fontWeight: FontWeight.bold),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          side: BorderSide(
-                            color: Color(0xff92278f),
-                            width: 1.0,
-                          ),
-                        ),
-                        backgroundColor: Color(0xff92278f),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          )
-        : reserveRooms();
-  }
+  // checkLogin() {
+  //   loginMethod == null || loginMethod == 'guest'
+  //       ? showDialog<String>(
+  //           context: context,
+  //           builder: (BuildContext context) => AlertDialog(
+  //             shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
+  //             icon: Container(
+  //               height: 100,
+  //               child: Lottie.asset('assets/lottie/info.json',
+  //                   fit: BoxFit.contain),
+  //             ),
+  //             title: Text(
+  //               "Login to continue",
+  //               textAlign: TextAlign.center,
+  //               style: TextStyle(
+  //                   fontSize: 16,
+  //                   fontFamily: 'Metropolis',
+  //                   color: Colors.black,
+  //                   fontWeight: FontWeight.bold),
+  //             ),
+  //             content: Text(
+  //               "Login or Create an account to book rooms.\nGet more features and access our exclusive deals and offers.",
+  //               textAlign: TextAlign.center,
+  //               style: TextStyle(
+  //                   fontSize: 14,
+  //                   fontFamily: 'Metropolis',
+  //                   color: Colors.black,
+  //                   fontWeight: FontWeight.w500),
+  //             ),
+  //             actions: <Widget>[
+  //               Row(
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                 children: [
+  //                   TextButton(
+  //                     onPressed: () => Get.back(),
+  //                     child: const Text(
+  //                       'Cancel',
+  //                       style: TextStyle(
+  //                           color: Color(0xff92278f),
+  //                           fontFamily: 'Metropolis',
+  //                           fontWeight: FontWeight.bold),
+  //                     ),
+  //                     style: OutlinedButton.styleFrom(
+  //                       shape: RoundedRectangleBorder(
+  //                         borderRadius: BorderRadius.circular(16),
+  //                         side: BorderSide(
+  //                           color: Color(0xff92278f),
+  //                           width: 1.0,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   TextButton(
+  //                     onPressed: () => Get.to(() => LoginPage(
+  //                           page: 'room',
+  //                         )),
+  //                     child: const Text(
+  //                       'Login',
+  //                       style: TextStyle(
+  //                           color: Color(0xffffffff),
+  //                           fontFamily: 'Metropolis',
+  //                           fontWeight: FontWeight.bold),
+  //                     ),
+  //                     style: OutlinedButton.styleFrom(
+  //                       shape: RoundedRectangleBorder(
+  //                         borderRadius: BorderRadius.circular(16),
+  //                         side: BorderSide(
+  //                           color: Color(0xff92278f),
+  //                           width: 1.0,
+  //                         ),
+  //                       ),
+  //                       backgroundColor: Color(0xff92278f),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               )
+  //             ],
+  //           ),
+  //         )
+  //       : reserveRooms();
+  // }
 
   void reserveRooms() async {
     setState(() {
@@ -1602,8 +1616,7 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           icon: Container(
             height: 100,
-            child:
-            Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
+            child: Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
           ),
           title: Text(
             "OOPS! There is an internal server error occoured",
@@ -1684,6 +1697,7 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
         );
       } else {
         Get.to(RoomBookPage(
+          loginMethod: loginMethod,
           noOfRooms: StoredGuest.length,
           hotelName: widget.hotelName,
           hotelCode: widget.hotelCode,
@@ -1703,7 +1717,8 @@ class _BookRoomSelectionState extends State<BookRoomSelection> {
           passport: passport,
           pan: pan,
           IsPackageFare: result.blockRoomResult!.isPackageFare,
-          IsPackagePakageDetails: result.blockRoomResult!.isPackageDetailsMandatory,
+          IsPackagePakageDetails:
+              result.blockRoomResult!.isPackageDetailsMandatory,
         ));
       }
     } else {

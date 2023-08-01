@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtrips/home/ui/hotel/rooms_page.dart';
 import 'package:dtrips/home/ui/hotel/single_hotel_page.dart.dart';
@@ -19,7 +20,7 @@ import '../../global.dart';
 import '../dashboard.dart';
 
 class SearchResult extends StatefulWidget {
-  SearchResult(
+  const SearchResult(
       {Key? key,
       this.night,
       this.checkinDate,
@@ -235,8 +236,7 @@ class _SearchResultState extends State<SearchResult>
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final orientation = MediaQuery.of(context).orientation.name;
-    int AppbarGuest = GuestCount;
+    int appbarGuest = GuestCount;
     super.build(context);
     return Container(
       decoration: const BoxDecoration(
@@ -369,110 +369,107 @@ class _SearchResultState extends State<SearchResult>
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              Get.to(const RoomSelectionPage(
-                                                page: "search",
-                                              ));
-                                            },
-                                            child: Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.person,
-                                                  size: 16,
-                                                  color: Colors.black,
-                                                ),
-                                                Text(
-                                                  " $AppbarGuest guest  ",
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.purple),
-                                                )
+                                    Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Get.to(const RoomSelectionPage(
+                                              page: "search",
+                                            ));
+                                          },
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.person,
+                                                size: 16,
+                                                color: Colors.black,
+                                              ),
+                                              Text(
+                                                " $appbarGuest guest  ",
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.purple),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            _restorableDateRangePickerRouteFuture
+                                                .present();
+                                          },
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.calendar_month,
+                                                size: 16,
+                                                color: Colors.black,
+                                              ),
+                                              Text(
+                                                " $inDate - $outDate",
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.purple),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Container(
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                            // boxShadow: [
+                                            //   BoxShadow(
+                                            //     color: Color(0xFFE9D4E9),
+                                            //     offset: Offset(2, 3),
+                                            //     blurRadius: 5.0,
+                                            //     spreadRadius: 2,
+                                            //   ),
+                                            // ],
+                                            gradient: const LinearGradient(
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                              stops: [0.0, 1.0],
+                                              colors: [
+                                                Color(0xff92278f),
+                                                Color(0xff92278f),
                                               ],
                                             ),
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                           ),
-                                          InkWell(
-                                            onTap: () {
-                                              _restorableDateRangePickerRouteFuture
-                                                  .present();
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                sts = 0;
+                                                searchResult.clear();
+                                                showHotels.clear();
+                                                imgResult.clear();
+                                                loop = false;
+                                              });
+                                              getHotel();
                                             },
-                                            child: Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.calendar_month,
-                                                  size: 16,
-                                                  color: Colors.black,
-                                                ),
-                                                Text(
-                                                  " $inDate - $outDate",
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.purple),
-                                                )
-                                              ],
+                                            style: ElevatedButton.styleFrom(
+                                              // padding: EdgeInsets.symmetric(
+                                              //     horizontal: 40.0, vertical: 20.0),
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              shadowColor: Colors.transparent,
+                                              shape: const StadiumBorder(),
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Container(
-                                            height: 20,
-                                            decoration: BoxDecoration(
-                                              // boxShadow: [
-                                              //   BoxShadow(
-                                              //     color: Color(0xFFE9D4E9),
-                                              //     offset: Offset(2, 3),
-                                              //     blurRadius: 5.0,
-                                              //     spreadRadius: 2,
-                                              //   ),
-                                              // ],
-                                              gradient: const LinearGradient(
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                                stops: [0.0, 1.0],
-                                                colors: [
-                                                  Color(0xff92278f),
-                                                  Color(0xff92278f),
-                                                ],
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  sts = 0;
-                                                  searchResult.clear();
-                                                  showHotels.clear();
-                                                  imgResult.clear();
-                                                  loop = false;
-                                                });
-                                                getHotel();
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                // padding: EdgeInsets.symmetric(
-                                                //     horizontal: 40.0, vertical: 20.0),
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                shadowColor: Colors.transparent,
-                                                shape: const StadiumBorder(),
-                                              ),
-                                              child: Text(
-                                                "Update",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize:
-                                                      screenSize.width / 35,
-                                                  fontFamily: 'Metropolis',
-                                                ),
+                                            child: Text(
+                                              "Update",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: screenSize.width / 35,
+                                                fontFamily: 'Metropolis',
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
 
                                     InkWell(
@@ -696,21 +693,19 @@ class _SearchResultState extends State<SearchResult>
                                           },
                                         );
                                       },
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.swap_vert_outlined,
-                                              color: Colors.black,
-                                            ),
-                                            const Text(
-                                              "Sort",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black),
-                                            )
-                                          ],
-                                        ),
+                                      child: const Row(
+                                        children: [
+                                          Icon(
+                                            Icons.swap_vert_outlined,
+                                            color: Colors.black,
+                                          ),
+                                          Text(
+                                            "Sort",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black),
+                                          )
+                                        ],
                                       ),
                                     ),
                                     // SizedBox(
@@ -777,7 +772,7 @@ class _SearchResultState extends State<SearchResult>
               padding: const EdgeInsets.all(8),
               child: Row(
                 children: [
-                  Text("Showing ${showHotels.length} of ${totalHotels}"),
+                  Text("Showing ${showHotels.length} of $totalHotels"),
                 ],
               ),
             ),
@@ -835,8 +830,8 @@ class _SearchResultState extends State<SearchResult>
                                 child: Row(
                                   children: [
                                     Container(
-                                      height: 225,
-                                      width: 130,
+                                      height: 280,
+                                      width: 140,
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(8)),
@@ -845,28 +840,27 @@ class _SearchResultState extends State<SearchResult>
                                         child: SizedBox.fromSize(
                                           size: const Size.fromRadius(
                                               8), // Image radius
-                                          child:
-                                          CachedNetworkImage(
+                                          child: CachedNetworkImage(
                                             imageUrl: "${items.hotelPicture}",
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.fill,
                                             placeholder: (context, url) =>
-                                            const Center(
-                                                child:
-                                                CircularProgressIndicator()),
+                                                const Center(
+                                                    child:
+                                                        CircularProgressIndicator()),
                                             errorWidget:
                                                 (context, url, error) =>
-                                                Container(
-                                                  height: 225,
-                                                  width: 130,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    image: new DecorationImage(
-                                                      image: const AssetImage(
-                                                          "assets/images/no-img.png"),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
+                                                    Container(
+                                              height: 280,
+                                              width: 140,
+                                              decoration: const BoxDecoration(
+                                                color: Colors.black,
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                      "assets/images/no-img.png"),
+                                                  fit: BoxFit.fill,
                                                 ),
+                                              ),
+                                            ),
                                           ),
                                           // Image.network(
                                           //   items.hotelPicture.toString(),
@@ -897,7 +891,6 @@ class _SearchResultState extends State<SearchResult>
                                           //     );
                                           //   },
                                           // ),
-
                                         ),
                                       ),
                                     ),
@@ -1055,7 +1048,7 @@ class _SearchResultState extends State<SearchResult>
                                                                 .end,
                                                         children: [
                                                           Text(
-                                                            "${night} ",
+                                                            "$night ",
                                                             maxLines: 2,
                                                             overflow:
                                                                 TextOverflow
@@ -1075,7 +1068,7 @@ class _SearchResultState extends State<SearchResult>
                                                             size: 15,
                                                           ),
                                                           Text(
-                                                            " night - ${GuestCount} ",
+                                                            " night - $GuestCount ",
                                                             maxLines: 2,
                                                             overflow:
                                                                 TextOverflow
@@ -1158,33 +1151,33 @@ class _SearchResultState extends State<SearchResult>
                                                 ),
                                               ),
 
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 10, bottom: 5),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Flexible(
-                                                      child: Text(
-                                                        "+ ₹${items.price!.otherCharges} Tax & charges",
-                                                        maxLines: 3,
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                        style: TextStyle(
-                                                            fontSize: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width /
-                                                                30,
-                                                            color: Colors.grey),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                              // Padding(
+                                              //   padding: const EdgeInsets.only(
+                                              //       right: 10, bottom: 5),
+                                              //   child: Row(
+                                              //     mainAxisAlignment:
+                                              //         MainAxisAlignment.end,
+                                              //     crossAxisAlignment:
+                                              //         CrossAxisAlignment.end,
+                                              //     children: [
+                                              //       Flexible(
+                                              //         child: Text(
+                                              //           "+ ₹${items.price!.otherCharges} Tax & charges",
+                                              //           maxLines: 3,
+                                              //           overflow:
+                                              //               TextOverflow.clip,
+                                              //           style: TextStyle(
+                                              //               fontSize: MediaQuery.of(
+                                              //                           context)
+                                              //                       .size
+                                              //                       .width /
+                                              //                   30,
+                                              //               color: Colors.grey),
+                                              //         ),
+                                              //       ),
+                                              //     ],
+                                              //   ),
+                                              // ),
 
                                               Row(
                                                 children: [
@@ -1297,8 +1290,8 @@ class _SearchResultState extends State<SearchResult>
                                 child: Row(
                                   children: [
                                     Container(
-                                      height: 225,
-                                      width: 130,
+                                      height: 280,
+                                      width: 140,
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(8)),
@@ -1307,29 +1300,27 @@ class _SearchResultState extends State<SearchResult>
                                         child: SizedBox.fromSize(
                                           size: const Size.fromRadius(
                                               8), // Image radius
-                                          child:
-
-                                          CachedNetworkImage(
+                                          child: CachedNetworkImage(
                                             imageUrl: "${items.hotelPicture}",
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.fill,
                                             placeholder: (context, url) =>
-                                            const Center(
-                                                child:
-                                                CircularProgressIndicator()),
+                                                const Center(
+                                                    child:
+                                                        CircularProgressIndicator()),
                                             errorWidget:
                                                 (context, url, error) =>
-                                                Container(
-                                                  height: 225,
-                                                  width: 130,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    image: new DecorationImage(
-                                                      image: const AssetImage(
-                                                          "assets/images/no-img.png"),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
+                                                    Container(
+                                              height: 280,
+                                              width: 140,
+                                              decoration: const BoxDecoration(
+                                                color: Colors.black,
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                      "assets/images/no-img.png"),
+                                                  fit: BoxFit.fill,
                                                 ),
+                                              ),
+                                            ),
                                           ),
 
                                           // Image.network(
@@ -1518,7 +1509,7 @@ class _SearchResultState extends State<SearchResult>
                                                                 .end,
                                                         children: [
                                                           Text(
-                                                            "${night} ",
+                                                            "$night ",
                                                             maxLines: 2,
                                                             overflow:
                                                                 TextOverflow
@@ -1538,7 +1529,7 @@ class _SearchResultState extends State<SearchResult>
                                                             size: 15,
                                                           ),
                                                           Text(
-                                                            " night - ${GuestCount} ",
+                                                            " night - $GuestCount ",
                                                             maxLines: 2,
                                                             overflow:
                                                                 TextOverflow
@@ -1621,33 +1612,33 @@ class _SearchResultState extends State<SearchResult>
                                                 ),
                                               ),
 
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 10, bottom: 5),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Flexible(
-                                                      child: Text(
-                                                        "+ ₹${items.price!.otherCharges} Tax & charges",
-                                                        maxLines: 3,
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                        style: TextStyle(
-                                                            fontSize: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width /
-                                                                30,
-                                                            color: Colors.grey),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                              // Padding(
+                                              //   padding: const EdgeInsets.only(
+                                              //       right: 10, bottom: 5),
+                                              //   child: Row(
+                                              //     mainAxisAlignment:
+                                              //         MainAxisAlignment.end,
+                                              //     crossAxisAlignment:
+                                              //         CrossAxisAlignment.end,
+                                              //     children: [
+                                              //       Flexible(
+                                              //         child: Text(
+                                              //           "+ ₹${items.price!.otherCharges} Tax & charges",
+                                              //           maxLines: 3,
+                                              //           overflow:
+                                              //               TextOverflow.clip,
+                                              //           style: TextStyle(
+                                              //               fontSize: MediaQuery.of(
+                                              //                           context)
+                                              //                       .size
+                                              //                       .width /
+                                              //                   30,
+                                              //               color: Colors.grey),
+                                              //         ),
+                                              //       ),
+                                              //     ],
+                                              //   ),
+                                              // ),
 
                                               Row(
                                                 children: [
@@ -1753,8 +1744,8 @@ class _SearchResultState extends State<SearchResult>
                                 child: Row(
                                   children: [
                                     Container(
-                                      height: 225,
-                                      width: 130,
+                                      height: 280,
+                                      width: 140,
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(8)),
@@ -1765,25 +1756,25 @@ class _SearchResultState extends State<SearchResult>
                                               8), // Image radius
                                           child: CachedNetworkImage(
                                             imageUrl: "${items.hotelPicture}",
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.fill,
                                             placeholder: (context, url) =>
-                                            const Center(
-                                                child:
-                                                CircularProgressIndicator()),
+                                                const Center(
+                                                    child:
+                                                        CircularProgressIndicator()),
                                             errorWidget:
                                                 (context, url, error) =>
-                                                Container(
-                                                  height: 225,
-                                                  width: 130,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    image: new DecorationImage(
-                                                      image: const AssetImage(
-                                                          "assets/images/no-img.png"),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
+                                                    Container(
+                                              height: 280,
+                                              width: 140,
+                                              decoration: const BoxDecoration(
+                                                color: Colors.black,
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                      "assets/images/no-img.png"),
+                                                  fit: BoxFit.fill,
                                                 ),
+                                              ),
+                                            ),
                                           ),
 
                                           // Image.network(
@@ -1972,7 +1963,7 @@ class _SearchResultState extends State<SearchResult>
                                                                 .end,
                                                         children: [
                                                           Text(
-                                                            "${night} ",
+                                                            "$night ",
                                                             maxLines: 2,
                                                             overflow:
                                                                 TextOverflow
@@ -1992,7 +1983,7 @@ class _SearchResultState extends State<SearchResult>
                                                             size: 15,
                                                           ),
                                                           Text(
-                                                            " night - ${GuestCount} ",
+                                                            " night - $GuestCount ",
                                                             maxLines: 2,
                                                             overflow:
                                                                 TextOverflow
@@ -2075,33 +2066,33 @@ class _SearchResultState extends State<SearchResult>
                                                 ),
                                               ),
 
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 10, bottom: 5),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Flexible(
-                                                      child: Text(
-                                                        "+ ₹${items.price!.otherCharges} Tax & charges",
-                                                        maxLines: 3,
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                        style: TextStyle(
-                                                            fontSize: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width /
-                                                                30,
-                                                            color: Colors.grey),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                              // Padding(
+                                              //   padding: const EdgeInsets.only(
+                                              //       right: 10, bottom: 5),
+                                              //   child: Row(
+                                              //     mainAxisAlignment:
+                                              //         MainAxisAlignment.end,
+                                              //     crossAxisAlignment:
+                                              //         CrossAxisAlignment.end,
+                                              //     children: [
+                                              //       Flexible(
+                                              //         child: Text(
+                                              //           "+ ₹${items.price!.otherCharges} Tax & charges",
+                                              //           maxLines: 3,
+                                              //           overflow:
+                                              //               TextOverflow.clip,
+                                              //           style: TextStyle(
+                                              //               fontSize: MediaQuery.of(
+                                              //                           context)
+                                              //                       .size
+                                              //                       .width /
+                                              //                   30,
+                                              //               color: Colors.grey),
+                                              //         ),
+                                              //       ),
+                                              //     ],
+                                              //   ),
+                                              // ),
 
                                               Row(
                                                 children: [
@@ -2230,8 +2221,8 @@ class _SearchResultState extends State<SearchResult>
                   children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          const BoxShadow(
+                        boxShadow: const [
+                          BoxShadow(
                             color: Color(0xFFE9D4E9),
                             offset: Offset(2, 3),
                             blurRadius: 5.0,
@@ -2348,9 +2339,9 @@ class _SearchResultState extends State<SearchResult>
     var currency = prefs.getString('currency') ?? "INR";
     // print("ip : $ips");
     final response = await http.post(
-      Uri.parse(api + 'api/hotels/search'),
+      Uri.parse('${api}api/hotels/search'),
       body: jsonEncode({
-        "CheckInDate": "${chechinDate}",
+        "CheckInDate": "$chechinDate",
         "NoOfNights": night,
         "ResultCount": 0,
         "PreferredCurrency": currency,
@@ -2369,6 +2360,7 @@ class _SearchResultState extends State<SearchResult>
       headers: {"content-type": "application/json"},
     );
     print(response.body);
+    log(response.body);
     print(response.statusCode);
     print('aaaaaaaaaaaaaaaaaaaaaaaaa');
     print(response.statusCode.isEqual(500));
@@ -2381,8 +2373,7 @@ class _SearchResultState extends State<SearchResult>
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           icon: Container(
             height: 100,
-            child:
-            Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
+            child: Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
           ),
           title: Text(
             "OOPS! There is an internal server error occoured",
@@ -2507,18 +2498,17 @@ class _SearchResultState extends State<SearchResult>
     }
     // print(".........................");
     if (response.statusCode == 200) {
-
-      try{
-
+      try {
         final result = hotelSearchFromJson(response.body);
         print("errors : ${result.hotelSearchResult!.error!.errorCode}");
         if (result.hotelSearchResult!.error!.errorCode == 0) {
           for (int i = 0;
-          i < result.hotelSearchResult!.hotelResults.length;
-          i++) {
+              i < result.hotelSearchResult!.hotelResults.length;
+              i++) {
             if (result.hotelSearchResult!.hotelResults[i].supplierHotelCodes!
                 .isNotEmpty) {
-              if (result.hotelSearchResult!.hotelResults[i].isTboMapped == true) {
+              if (result.hotelSearchResult!.hotelResults[i].isTboMapped ==
+                  true) {
                 setState(() {
                   searchResult.add(result.hotelSearchResult!.hotelResults[i]);
                 });
@@ -2583,13 +2573,6 @@ class _SearchResultState extends State<SearchResult>
                         Navigator.pop(context);
                         getHotel();
                       },
-                      child: const Text(
-                        'Retry',
-                        style: TextStyle(
-                            color: Color(0xff92278f),
-                            fontFamily: 'Metropolis',
-                            fontWeight: FontWeight.bold),
-                      ),
                       style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -2599,16 +2582,16 @@ class _SearchResultState extends State<SearchResult>
                           ),
                         ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () => Get.off(() => Dashboard()),
                       child: const Text(
-                        'Go Home',
+                        'Retry',
                         style: TextStyle(
-                            color: Color(0xffffffff),
+                            color: Color(0xff92278f),
                             fontFamily: 'Metropolis',
                             fontWeight: FontWeight.bold),
                       ),
+                    ),
+                    TextButton(
+                      onPressed: () => Get.off(() => Dashboard()),
                       style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -2618,6 +2601,13 @@ class _SearchResultState extends State<SearchResult>
                           ),
                         ),
                         backgroundColor: const Color(0xff92278f),
+                      ),
+                      child: const Text(
+                        'Go Home',
+                        style: TextStyle(
+                            color: Color(0xffffffff),
+                            fontFamily: 'Metropolis',
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -2632,12 +2622,9 @@ class _SearchResultState extends State<SearchResult>
           tokenId = result.token;
           // categoryId="${result.hotelSearchResult.hotelResults[0]}";
         });
-
-      }catch(e){
+      } catch (e) {
         print(e);
       }
-
-
     } else if (response.statusCode == 504) {
       showDialog<String>(
         context: context,
@@ -2726,16 +2713,14 @@ class _SearchResultState extends State<SearchResult>
     }
   }
 
-
   void goToSingle(int index) async {
-
     setState(() {
       loading = false;
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var ips = prefs.getString('ip');
     final response = await http.post(
-      Uri.parse(api + 'api/hotels/hotel-info'),
+      Uri.parse('${api}api/hotels/hotel-info'),
       body: jsonEncode({
         "HotelCode": "${showHotels[index].hotelCode}",
         "ResultIndex": showHotels[index].resultIndex,
@@ -2755,8 +2740,7 @@ class _SearchResultState extends State<SearchResult>
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           icon: Container(
             height: 100,
-            child:
-            Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
+            child: Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
           ),
           title: Text(
             "OOPS! There is an internal server error occoured",
@@ -2951,6 +2935,17 @@ class _SearchResultState extends State<SearchResult>
         });
       } else if (result.hotelInfoResult!.error!.errorCode == 0) {
         getSingleImg(showHotels[index].hotelCode);
+        saveInfo(
+          showHotels[index].hotelName,
+          result.hotelInfoResult!.hotelDetails!.address,
+          result.hotelInfoResult!.hotelDetails!.starRating!.toDouble(),
+          showHotels[index].hotelCode,
+          widget.cityId.toString(),
+          result.hotelInfoResult!.hotelDetails!.longitude,
+          result.hotelInfoResult!.hotelDetails!.latitude,
+          result.hotelInfoResult!.hotelDetails!.hotelFacilities!,
+          result.hotelInfoResult!.hotelDetails!.images!,
+        );
         print("aaaaa: ${result.hotelInfoResult!.hotelDetails!.images!}");
         setState(() {
           imgList = result.hotelInfoResult!.hotelDetails!.images!;
@@ -3178,13 +3173,13 @@ class _SearchResultState extends State<SearchResult>
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var ips = prefs.getString('ip');
     final response = await http.post(
-      Uri.parse(api + 'api/hotels/static-data'),
+      Uri.parse('${api}api/hotels/static-data'),
       body: jsonEncode({
         "CityId": "${widget.cityId}",
         "HotelId": "$hotelCode",
         "ClientId": "tboprod",
         "EndUserIp": "$ips",
-        "TokenId": "${tokenId}",
+        "TokenId": "$tokenId",
         "IsCompactData": "true"
       }),
       headers: {"content-type": "application/json"},
@@ -3226,17 +3221,16 @@ class _SearchResultState extends State<SearchResult>
       sts = 200;
     });
 
-
     for (int i = 0; i < hotelCount; i++) {
       try {
         final response = await http.post(
-          Uri.parse(api + 'api/hotels/static-data'),
+          Uri.parse('${api}api/hotels/static-data'),
           body: jsonEncode({
             "CityId": "${widget.cityId}",
             "HotelId": "${searchResult[i].hotelCode}",
             "ClientId": "tboprod",
             "EndUserIp": "$ips",
-            "TokenId": "${tokenId}",
+            "TokenId": "$tokenId",
             "IsCompactData": "true"
           }),
           headers: {"content-type": "application/json"},
@@ -3293,11 +3287,47 @@ class _SearchResultState extends State<SearchResult>
 
   void _restoreScrollPosition() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final double? scrollPosition =
-          PageStorage.of(context).readState(context);
+      final double? scrollPosition = PageStorage.of(context).readState(context);
       if (_scrollController.hasClients && scrollPosition != null) {
         _scrollController.jumpTo(scrollPosition);
       }
     });
+  }
+
+  void saveInfo(
+    String? hotelName,
+    String? hotelAddress,
+    double starRating,
+    String? hotelCode,
+    var cityId,
+    String? latitude,
+    String? longitude,
+    List facilities,
+    List images,
+  ) async {
+    try {
+      print("Save info");
+      final response = await http.post(
+        Uri.parse('${api}info/save'),
+        body: jsonEncode({
+          "hotelName": hotelName,
+          "hotelAddress": hotelAddress,
+          "starRating": starRating,
+          "hotelCode": hotelCode,
+          "cityid": cityId,
+          "latitude": latitude,
+          "longitude": longitude,
+          "hotelFacilities": facilities,
+          "images": images
+        }),
+        headers: {"content-type": "application/json"},
+      );
+
+      print("Save info");
+      print(response.body);
+      print(response.statusCode);
+    } catch (e) {
+      print(e);
+    }
   }
 }

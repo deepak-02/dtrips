@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +19,7 @@ import 'models/bookRoomModel.dart';
 class RoomBookPage extends StatefulWidget {
   const RoomBookPage(
       {Key? key,
+      this.loginMethod,
       this.hotelCode,
       this.resultIndex,
       this.traceId,
@@ -40,6 +42,7 @@ class RoomBookPage extends StatefulWidget {
       this.pan})
       : super(key: key);
 
+  final loginMethod;
   final hotelCode;
   final resultIndex;
   final traceId;
@@ -78,6 +81,147 @@ class _RoomBookPageState extends State<RoomBookPage> {
   late Razorpay _razorpay;
   bool isLoading = false;
 
+  int arrivalType = 1;
+  int departureType = 1;
+
+  final DateFormat formatter = DateFormat('yyyy-MM-ddTHH:mm');
+
+  final DateFormat displayFormatter = DateFormat('MMM dd, HH:mm');
+
+  dynamic arrivalTime;
+  dynamic departureTime;
+
+  TextEditingController arrivalController = TextEditingController();
+  TextEditingController departureController = TextEditingController();
+
+  Future<void> _selectArrivalTime(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: arrivalTime ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2099),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: const Color(0xFF92278F),
+            // accentColor: const Color(0xFF879AE9),
+            colorScheme: const ColorScheme.light(primary: Color(0xFF92278F)),
+            dialogTheme: const DialogTheme(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(18)))),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: arrivalTime != null
+            ? TimeOfDay.fromDateTime(arrivalTime)
+            : TimeOfDay.now(),
+        builder: (context, child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              primaryColor: const Color(0xFF92278F),
+              // accentColor: const Color(0xFF879AE9),
+              colorScheme: const ColorScheme.light(primary: Color(0xFF92278F)),
+              dialogTheme: const DialogTheme(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(18)))),
+              buttonTheme:
+                  const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            ),
+            child: child!,
+          );
+        },
+      );
+
+      if (pickedTime != null) {
+        final DateTime pickedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        setState(() {
+          arrivalTime = pickedDateTime;
+          arrivalController.text =
+              displayFormatter.format(arrivalTime).toString();
+        });
+      }
+    }
+  }
+
+  Future<void> _selectDepartureTime(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: departureTime ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2099),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: const Color(0xFF92278F),
+            // accentColor: const Color(0xFF879AE9),
+            colorScheme: const ColorScheme.light(primary: Color(0xFF92278F)),
+            dialogTheme: const DialogTheme(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(18)))),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: departureTime != null
+            ? TimeOfDay.fromDateTime(departureTime)
+            : TimeOfDay.now(),
+        builder: (context, child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              primaryColor: const Color(0xFF92278F),
+              // accentColor: const Color(0xFF879AE9),
+              colorScheme: const ColorScheme.light(primary: Color(0xFF92278F)),
+              dialogTheme: const DialogTheme(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(18)))),
+              buttonTheme:
+                  const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            ),
+            child: child!,
+          );
+        },
+      );
+
+      if (pickedTime != null) {
+        final DateTime pickedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        setState(() {
+          departureTime = pickedDateTime;
+          departureController.text =
+              displayFormatter.format(departureTime).toString();
+        });
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -105,7 +249,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
 
       if (StoredGuest[i]['NoOfChild'] != 0) {
         for (var j = 0; j < StoredGuest[i]['NoOfChild']; j++) {
-          print("age =" + StoredGuest[i]['ChildAge'][j].toString());
+          print("age =${StoredGuest[i]['ChildAge'][j]}");
 
           _hotelPassengers.add(BookRoomModel("Mr", "", "", "", "", null, 2,
                   true, StoredGuest[i]['ChildAge'][j], null, null, null, "")
@@ -175,7 +319,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                 padding: const EdgeInsets.only(bottom: 0, left: 10),
                 child: InkWell(
                   onTap: () => Get.back(),
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back,
                     size: 30,
                     color: Colors.black,
@@ -200,7 +344,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Price",
                           style: TextStyle(
                               fontFamily: "Metropolis",
@@ -210,7 +354,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                         ),
                         Text(
                           "₹${widget.price.toStringAsFixed(2)}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontFamily: "Metropolis",
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -222,14 +366,14 @@ class _RoomBookPageState extends State<RoomBookPage> {
                   Container(
                     decoration: BoxDecoration(
                       boxShadow: [
-                        BoxShadow(
+                        const BoxShadow(
                           color: Color(0xFFE9D4E9),
                           offset: Offset(2, 3),
                           blurRadius: 5.0,
                           spreadRadius: 2,
                         ),
                       ],
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         stops: [0.0, 1.0],
@@ -245,11 +389,11 @@ class _RoomBookPageState extends State<RoomBookPage> {
                         getOrderId();
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             horizontal: 40.0, vertical: 20.0),
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
-                        shape: StadiumBorder(),
+                        shape: const StadiumBorder(),
                       ),
                       child: Text(
                         "Book Now",
@@ -271,11 +415,11 @@ class _RoomBookPageState extends State<RoomBookPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           color: Colors.white,
                           boxShadow: [
@@ -297,19 +441,19 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                 children: [
                                   Column(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "CHECK-IN",
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black54,
                                             fontWeight: FontWeight.w600),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
                                       Text(
                                         "${widget.Datein}",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w900),
                                       )
@@ -319,7 +463,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                     children: [
                                       Text(
                                         "${widget.night} night",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w400),
                                       )
@@ -327,19 +471,19 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                   ),
                                   Column(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "CHECK-OUT",
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black54,
                                             fontWeight: FontWeight.w600),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
                                       Text(
                                         "${widget.Dateout}",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w900),
                                       )
@@ -347,14 +491,14 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               Row(
                                 children: [
                                   Text(
                                     "${widget.noOfRooms} Rooms, ${GuestCount} Guest",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
                                         color: Colors.purple),
@@ -365,7 +509,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
 
@@ -378,7 +522,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                         itemCount: widget.noOfRooms,
                         itemBuilder: (context, index) {
                           return Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
                               color: Colors.white,
@@ -394,29 +538,29 @@ class _RoomBookPageState extends State<RoomBookPage> {
                             child: Column(
                               children: [
                                 Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Color(0xff92278f),
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(10),
                                         topRight: Radius.circular(10)),
                                   ),
-                                  padding: EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
                                   height: 40,
                                   child: Row(
                                     children: [
                                       Text(
                                         "Room ${index + 1} : ",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Text(
                                         "${StoredGuest[index]['NoOfAdults']} Adult, ${StoredGuest[index]['NoOfChild']} Child",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
@@ -424,11 +568,11 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(5),
+                                const Padding(
+                                  padding: EdgeInsets.all(5),
                                   child: Column(
                                     children: [
                                       Text(
@@ -438,8 +582,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 8.0),
+                                        padding: EdgeInsets.only(top: 8.0),
                                         child: Row(
                                           children: [
                                             Text(
@@ -474,7 +617,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                   ['PaxType'] ==
                                               1
                                           ? Container(
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                                 color: Colors.white,
@@ -490,18 +633,19 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                               child: Column(
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.only(
-                                                        left: 10,
-                                                        right: 10,
-                                                        bottom: 10,
-                                                        top: 10),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10,
+                                                            bottom: 10,
+                                                            top: 10),
                                                     child: Column(
                                                       children: [
                                                         Row(
                                                           children: [
-                                                            Padding(
+                                                            const Padding(
                                                               padding:
-                                                                  const EdgeInsets
+                                                                  EdgeInsets
                                                                       .all(5),
                                                               child: Icon(
                                                                 Icons.person,
@@ -512,7 +656,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                             ),
                                                             Text(
                                                               "Passenger ${ind + 1} Adult",
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 14,
                                                                   fontWeight:
                                                                       FontWeight
@@ -520,7 +664,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                             )
                                                           ],
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                         FittedBox(
@@ -554,7 +698,8 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                                       });
                                                                     },
                                                                   ),
-                                                                  Text("Mr.")
+                                                                  const Text(
+                                                                      "Mr.")
                                                                 ],
                                                               ),
                                                               Row(
@@ -579,7 +724,8 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                                       });
                                                                     },
                                                                   ),
-                                                                  Text("Ms.")
+                                                                  const Text(
+                                                                      "Ms.")
                                                                 ],
                                                               ),
                                                               Row(
@@ -605,7 +751,8 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                                       });
                                                                     },
                                                                   ),
-                                                                  Text("Mrs.")
+                                                                  const Text(
+                                                                      "Mrs.")
                                                                 ],
                                                               ),
                                                               Row(
@@ -631,22 +778,23 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                                       });
                                                                     },
                                                                   ),
-                                                                  Text("Miss.")
+                                                                  const Text(
+                                                                      "Miss.")
                                                                 ],
                                                               ),
                                                             ],
                                                           ),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                         Container(
                                                           height: 50,
-                                                          color:
-                                                              Color(0x1292278f),
+                                                          color: const Color(
+                                                              0x1292278f),
                                                           child: TextFormField(
                                                             decoration:
-                                                                InputDecoration(
+                                                                const InputDecoration(
                                                                     border:
                                                                         OutlineInputBorder(),
                                                                     // labelText: 'First Name',
@@ -700,16 +848,16 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                             },
                                                           ),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                         Container(
                                                           height: 50,
-                                                          color:
-                                                              Color(0x1292278f),
+                                                          color: const Color(
+                                                              0x1292278f),
                                                           child: TextFormField(
                                                             decoration:
-                                                                InputDecoration(
+                                                                const InputDecoration(
                                                               border:
                                                                   OutlineInputBorder(),
                                                               labelText:
@@ -732,16 +880,16 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                             },
                                                           ),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                         Container(
                                                           height: 50,
-                                                          color:
-                                                              Color(0x1292278f),
+                                                          color: const Color(
+                                                              0x1292278f),
                                                           child: TextFormField(
                                                             decoration:
-                                                                InputDecoration(
+                                                                const InputDecoration(
                                                               border:
                                                                   OutlineInputBorder(),
                                                               // labelText: 'Last Name',
@@ -791,16 +939,16 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                             },
                                                           ),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                         Container(
                                                           height: 50,
-                                                          color:
-                                                              Color(0x1292278f),
+                                                          color: const Color(
+                                                              0x1292278f),
                                                           child: TextFormField(
                                                             decoration:
-                                                                InputDecoration(
+                                                                const InputDecoration(
                                                               border:
                                                                   OutlineInputBorder(),
                                                               // labelText: 'Email',
@@ -853,132 +1001,146 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                             },
                                                           ),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
-                                                        widget.pan == true
-                                                            ? Container(
-                                                                height: 50,
-                                                                color: Color(
-                                                                    0x1292278f),
-                                                                child:
-                                                                    TextFormField(
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    border:
-                                                                        OutlineInputBorder(),
-                                                                    // labelText: 'PAN',
-                                                                    label:
-                                                                        FittedBox(
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.start,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Text(
-                                                                            "* ",
-                                                                            style:
-                                                                                TextStyle(color: Colors.red, fontSize: 18),
-                                                                          ),
-                                                                          Text(
-                                                                            "PAN",
-                                                                            style:
-                                                                                TextStyle(color: Colors.black, fontSize: 14),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(
-                                                                        () {
-                                                                      bookRoomModel
-                                                                              .PAN =
-                                                                          value
-                                                                              .toString();
-                                                                      hotelRoomDetail1[index]['HotelPassenger'][ind]
-                                                                              [
-                                                                              'PAN'] =
-                                                                          value
-                                                                              .toString();
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              )
-                                                            : Container(),
-                                                        widget.pan == true
-                                                            ? SizedBox(
-                                                                height: 10,
-                                                              )
-                                                            : Container(),
-                                                        widget.passport == true
-                                                            ? Container(
-                                                                height: 50,
-                                                                color: Color(
-                                                                    0x1292278f),
-                                                                child:
-                                                                    TextFormField(
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    border:
-                                                                        OutlineInputBorder(),
-                                                                    // labelText: 'Passport',
-                                                                    label:
-                                                                        FittedBox(
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.start,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Text(
-                                                                            "* ",
-                                                                            style:
-                                                                                TextStyle(color: Colors.red, fontSize: 18),
-                                                                          ),
-                                                                          Text(
-                                                                            "Passport",
-                                                                            style:
-                                                                                TextStyle(color: Colors.black, fontSize: 14),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(
-                                                                        () {
-                                                                      bookRoomModel
-                                                                              .PassportNo =
-                                                                          value
-                                                                              .toString();
-                                                                      hotelRoomDetail1[index]['HotelPassenger'][ind]
-                                                                              [
-                                                                              'PassportNo'] =
-                                                                          value
-                                                                              .toString();
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              )
-                                                            : Container(),
-                                                        widget.passport == true
-                                                            ? SizedBox(
-                                                                height: 10,
-                                                              )
-                                                            : Container(),
+
+                                                        // widget.pan == true ?
                                                         Container(
                                                           height: 50,
-                                                          color:
-                                                              Color(0x1292278f),
+                                                          color: const Color(
+                                                              0x1292278f),
                                                           child: TextFormField(
                                                             decoration:
-                                                                InputDecoration(
+                                                                const InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              // labelText: 'PAN',
+                                                              label: FittedBox(
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      "* ",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .red,
+                                                                          fontSize:
+                                                                              18),
+                                                                    ),
+                                                                    Text(
+                                                                      "PAN",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              14),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                bookRoomModel
+                                                                        .PAN =
+                                                                    value
+                                                                        .toString();
+                                                                hotelRoomDetail1[index]['HotelPassenger']
+                                                                            [
+                                                                            ind]
+                                                                        [
+                                                                        'PAN'] =
+                                                                    value
+                                                                        .toString();
+                                                              });
+                                                            },
+                                                          ),
+                                                        ),
+                                                        // : Container(),
+                                                        // widget.pan == true ?
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        // : Container(),
+
+                                                        // widget.passport == true
+                                                        //     ?
+                                                        Container(
+                                                          height: 50,
+                                                          color: const Color(
+                                                              0x1292278f),
+                                                          child: TextFormField(
+                                                            decoration:
+                                                                const InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              // labelText: 'Passport',
+                                                              label: FittedBox(
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      "* ",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .red,
+                                                                          fontSize:
+                                                                              18),
+                                                                    ),
+                                                                    Text(
+                                                                      "Passport",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              14),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                bookRoomModel
+                                                                        .PassportNo =
+                                                                    value
+                                                                        .toString();
+                                                                hotelRoomDetail1[index]['HotelPassenger']
+                                                                            [
+                                                                            ind]
+                                                                        [
+                                                                        'PassportNo'] =
+                                                                    value
+                                                                        .toString();
+                                                              });
+                                                            },
+                                                          ),
+                                                        ),
+                                                        // : Container(),
+                                                        // widget.passport == true ?
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        // : Container(),
+
+                                                        Container(
+                                                          height: 50,
+                                                          color: const Color(
+                                                              0x1292278f),
+                                                          child: TextFormField(
+                                                            decoration:
+                                                                const InputDecoration(
                                                               border:
                                                                   OutlineInputBorder(),
                                                               // labelText: 'Phone Number',
@@ -1038,7 +1200,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                               ),
                                             )
                                           : Container(
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                                 color: Colors.white,
@@ -1054,18 +1216,19 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                               child: Column(
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.only(
-                                                        left: 10,
-                                                        right: 10,
-                                                        bottom: 10,
-                                                        top: 10),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10,
+                                                            bottom: 10,
+                                                            top: 10),
                                                     child: Column(
                                                       children: [
                                                         Row(
                                                           children: [
-                                                            Padding(
+                                                            const Padding(
                                                               padding:
-                                                                  const EdgeInsets
+                                                                  EdgeInsets
                                                                       .all(5),
                                                               child: Icon(
                                                                 Icons.person,
@@ -1076,7 +1239,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                             ),
                                                             Text(
                                                               "Passenger ${ind + 1} Child",
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 14,
                                                                   fontWeight:
                                                                       FontWeight
@@ -1183,16 +1346,16 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                         // ],
                                                         // ),
                                                         // ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                         Container(
                                                           height: 50,
-                                                          color:
-                                                              Color(0x1292278f),
+                                                          color: const Color(
+                                                              0x1292278f),
                                                           child: TextFormField(
                                                             decoration:
-                                                                InputDecoration(
+                                                                const InputDecoration(
                                                               border:
                                                                   OutlineInputBorder(),
                                                               // labelText: 'First Name',
@@ -1265,7 +1428,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                             },
                                                           ),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                         // Container(
@@ -1292,11 +1455,11 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                         // ),
                                                         Container(
                                                           height: 50,
-                                                          color:
-                                                              Color(0x1292278f),
+                                                          color: const Color(
+                                                              0x1292278f),
                                                           child: TextFormField(
                                                             decoration:
-                                                                InputDecoration(
+                                                                const InputDecoration(
                                                               border:
                                                                   OutlineInputBorder(),
                                                               // labelText: 'Last Name',
@@ -1347,7 +1510,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                                           ),
                                                         ),
 
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                       ],
@@ -1359,13 +1522,13 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                     },
                                     separatorBuilder:
                                         (BuildContext context, int index) {
-                                      return SizedBox(
+                                      return const SizedBox(
                                         height: 20,
                                       );
                                     },
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                               ],
@@ -1373,12 +1536,418 @@ class _RoomBookPageState extends State<RoomBookPage> {
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
+                          return const SizedBox(
                             height: 20,
                           );
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
+                        height: 30,
+                      ),
+
+                      Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xAD9B9B9B),
+                              offset: Offset(2, 3),
+                              blurRadius: 5.0,
+                              spreadRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                color: Color(0xff92278f),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+                              ),
+                              padding: const EdgeInsets.all(8),
+                              height: 40,
+                              child: const Row(
+                                children: [
+                                  Text(
+                                    "Package Details",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Arrival Details",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  FittedBox(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Radio(
+                                              value: 1,
+                                              groupValue: arrivalType,
+                                              onChanged: (value) {
+                                                print(value);
+                                                setState(() {
+                                                  arrivalType = value!;
+                                                });
+                                              },
+                                            ),
+                                            const Text("By Flight.")
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Radio(
+                                              value: 2,
+                                              groupValue: arrivalType,
+                                              onChanged: (value) {
+                                                print(value);
+                                                setState(() {
+                                                  arrivalType = value!;
+                                                });
+                                              },
+                                            ),
+                                            const Text("By Surface")
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          height: 50,
+                                          color: const Color(0x1292278f),
+                                          child: arrivalType == 1
+                                              ? TextFormField(
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    label: FittedBox(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            "* ",
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.red,
+                                                                fontSize: 18),
+                                                          ),
+                                                          Text(
+                                                            "Flight No",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 14),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onChanged: (value) {
+                                                    // Handle flight no. value change
+                                                  },
+                                                )
+                                              : TextFormField(
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    label: FittedBox(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            "* ",
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.red,
+                                                                fontSize: 18),
+                                                          ),
+                                                          Text(
+                                                            "Transport Type/No",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 14),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onChanged: (value) {
+                                                    // Handle flight no. value change
+                                                  },
+                                                ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                          width:
+                                              8), // Add spacing between the two text form fields
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          height: 50,
+                                          color: const Color(0x1292278f),
+                                          child: TextFormField(
+                                            readOnly: true,
+                                            onTap: () =>
+                                                _selectArrivalTime(context),
+                                            controller: arrivalController,
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              label: FittedBox(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "* ",
+                                                      style: TextStyle(
+                                                          color: Colors.red,
+                                                          fontSize: 18),
+                                                    ),
+                                                    Text(
+                                                      "Date&Time",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            onChanged: (value) {
+                                              // Handle first name value change
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Departure Details",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  FittedBox(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Radio(
+                                              value: 1,
+                                              groupValue: departureType,
+                                              onChanged: (value) {
+                                                print(value);
+                                                setState(() {
+                                                  departureType = value!;
+                                                });
+                                              },
+                                            ),
+                                            const Text("By Flight.")
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Radio(
+                                              value: 2,
+                                              groupValue: departureType,
+                                              onChanged: (value) {
+                                                print(value);
+                                                setState(() {
+                                                  departureType = value!;
+                                                });
+                                              },
+                                            ),
+                                            const Text("By Surface")
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          height: 50,
+                                          color: const Color(0x1292278f),
+                                          child: departureType == 1
+                                              ? TextFormField(
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    label: FittedBox(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            "* ",
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.red,
+                                                                fontSize: 18),
+                                                          ),
+                                                          Text(
+                                                            "Flight No",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 14),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onChanged: (value) {
+                                                    // Handle flight no. value change
+                                                  },
+                                                )
+                                              : TextFormField(
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    label: FittedBox(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            "* ",
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.red,
+                                                                fontSize: 18),
+                                                          ),
+                                                          Text(
+                                                            "Transport Type/No",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 14),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onChanged: (value) {
+                                                    // Handle flight no. value change
+                                                  },
+                                                ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                          width:
+                                              8), // Add spacing between the two text form fields
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          height: 50,
+                                          color: const Color(0x1292278f),
+                                          child: TextFormField(
+                                            readOnly: true,
+                                            onTap: () =>
+                                                _selectDepartureTime(context),
+                                            controller: departureController,
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              label: FittedBox(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "* ",
+                                                      style: TextStyle(
+                                                          color: Colors.red,
+                                                          fontSize: 18),
+                                                    ),
+                                                    Text(
+                                                      "Date&Time",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(
                         height: 30,
                       ),
                       Text(
@@ -1407,7 +1976,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                     });
                                   },
                                 ),
-                                Text("Business.")
+                                const Text("Business.")
                               ],
                             ),
                             Row(
@@ -1427,17 +1996,17 @@ class _RoomBookPageState extends State<RoomBookPage> {
                                     });
                                   },
                                 ),
-                                Text("Leisure.")
+                                const Text("Leisure.")
                               ],
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                     ],
@@ -1449,137 +2018,71 @@ class _RoomBookPageState extends State<RoomBookPage> {
   }
 
   void bookNow(String paymentId) async {
-    RoomPassenger.length >= widget.noOfRooms ? RoomPassenger.clear() : null;
+    try {
+      RoomPassenger.length >= widget.noOfRooms ? RoomPassenger.clear() : null;
 
-    print("package fare");
-    print(widget.IsPackageFare);
+      print("package fare");
+      print(widget.IsPackageFare);
 
-    setState(() {
-      isLoading = true;
-      // for (var i = 0; i < widget.noOfRooms; i++) {
-      //   // hotelRoomDetail[i].add(_hotelPassengers[i]);
-      //   List passenger = [_hotelPassengers[i]];
-      //   hotelRoomDetail[i]['HotelPassenger'] = passenger;
-      //   RoomPassenger.add(hotelRoomDetail[i]);
-      // }
-    });
-    // print(RoomPassenger);
-    // print(RoomPassenger.length);
+      setState(() {
+        isLoading = true;
+        // for (var i = 0; i < widget.noOfRooms; i++) {
+        //   // hotelRoomDetail[i].add(_hotelPassengers[i]);
+        //   List passenger = [_hotelPassengers[i]];
+        //   hotelRoomDetail[i]['HotelPassenger'] = passenger;
+        //   RoomPassenger.add(hotelRoomDetail[i]);
+        // }
+      });
+      // print(RoomPassenger);
+      // print(RoomPassenger.length);
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var ips = prefs.getString('ip');
-    final response = await http.post(
-      Uri.parse(api + 'api/hotels/book'),
-      body: jsonEncode({
-        "EndUserIp": "$ips",
-        "TokenId": "${widget.tokenId}",
-        "TraceId": "${widget.traceId}",
-        "AgencyId": 57222,//80992,
-        "ResultIndex": "${widget.resultIndex}",
-        "HotelCode": "${widget.hotelCode}",
-        "CategoryId": "${widget.categoryId}",
-        "HotelName": "${widget.hotelName}",
-        "GuestNationality": "IN",
-        "NoOfRooms": widget.noOfRooms,
-        "IsVoucherBooking": true,
-        "RoomDetails": hotelRoomDetail1,
-        "IsCorporate": BusinessBooking,
-        "IsPackageFare": widget.IsPackageFare,
-        "IsPackageDetailsMandatory": widget.IsPackagePakageDetails,
-        "DepartureTransport": {
-          "TransportInfoId": "Ab 777",
-          "Time": "2023-08-20T18:18:00"
-        },
-        "ArrivalTransportType": 1,
-        "TransportInfoId": "Ab 777",
-        "Time": "2023-08-21T18:18:00"
-      }),
-      headers: {"content-type": "application/json"},
-    );
-    print(response.body);
-    print(response.statusCode);
-    if (response.statusCode == 500) {
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
-          icon: Container(
-            height: 100,
-            child:
-            Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
-          ),
-          title: Text(
-            "OOPS! There is an internal server error occoured",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 20,
-                fontFamily: 'Metropolis',
-                color: Colors.black,
-                fontWeight: FontWeight.bold),
-          ),
-          content: Text(
-            "Try again or feel free to contact us if the problem persists.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 24,
-                fontFamily: 'Metropolis',
-                color: Colors.black,
-                fontWeight: FontWeight.w500),
-          ),
-          actions: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () => Get.off(() => Dashboard()),
-                  child: const Text(
-                    'Go Home',
-                    style: TextStyle(
-                        color: Color(0xffffffff),
-                        fontFamily: 'Metropolis',
-                        fontWeight: FontWeight.bold),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      side: const BorderSide(
-                        color: Color(0xff92278f),
-                        width: 1.0,
-                      ),
-                    ),
-                    backgroundColor: const Color(0xff92278f),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var ips = prefs.getString('ip');
+      final response = await http.post(
+        Uri.parse(api + 'api/hotels/book'),
+        body: jsonEncode({
+          "EndUserIp": "$ips",
+          "TokenId": "${widget.tokenId}",
+          "TraceId": "${widget.traceId}",
+          "AgencyId": 57222, //80992,
+          "ResultIndex": "${widget.resultIndex}",
+          "HotelCode": "${widget.hotelCode}",
+          "CategoryId": "${widget.categoryId}",
+          "HotelName": "${widget.hotelName}",
+          "GuestNationality": "IN",
+          "NoOfRooms": widget.noOfRooms,
+          "IsVoucherBooking": true,
+          "RoomDetails": hotelRoomDetail1,
+          "IsCorporate": BusinessBooking,
+          "IsPackageFare": widget.IsPackageFare,
+          "IsPackageDetailsMandatory": widget.IsPackagePakageDetails,
+          "DepartureTransport": {
+            "TransportInfoId": departureController.text,
+            "Time": "${formatter.format(departureTime)}"
+          },
+          "ArrivalTransportType": arrivalType,
+          "TransportInfoId": arrivalController.text,
+          "Time": "${formatter.format(arrivalTime)}"
+        }),
+        headers: {"content-type": "application/json"},
       );
-    }
-
-    final result = hotelBookFromJson(response.body);
-
-    if (response.statusCode == 200) {
-      if (result.bookResult!.error!.errorCode == 0) {
-        saveBooking(result.bookResult!.bookingId, paymentId);
-        setState(() {
-          isLoading = false;
-        });
+      print("Bookkkkkkk");
+      log(response.body);
+      print(response.body);
+      print(response.statusCode);
+      if (response.statusCode == 500) {
         showDialog<String>(
           context: context,
-          barrierDismissible: false,
           builder: (BuildContext context) => AlertDialog(
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
             icon: Container(
               height: 100,
-              child: Lottie.asset('assets/lottie/success1.json',
-                  fit: BoxFit.contain),
+              child:
+                  Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
             ),
             title: Text(
-              "Success",
+              "OOPS! There is an internal server error occoured",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width / 20,
@@ -1588,7 +2091,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                   fontWeight: FontWeight.bold),
             ),
             content: Text(
-              "Your booking is done successfully.\nYou will be re directed to voucher page.",
+              "Try again or feel free to contact us if the problem persists.",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width / 24,
@@ -1602,33 +2105,9 @@ class _RoomBookPageState extends State<RoomBookPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextButton(
-                    onPressed: () => Get.offAll(BookedHotelDetailsPage(
-                      Bookedprice: widget.price.toStringAsFixed(2),
-                      BookingId: result.bookResult!.bookingId,
-                      cancellationCharge: widget.cancellationCharge.toString(),
-                      payId: paymentId,
-                    )),
+                    onPressed: () => Get.off(() => Dashboard()),
                     child: const Text(
-                      'View Booking',
-                      style: TextStyle(
-                          color: Color(0xff92278f),
-                          fontFamily: 'Metropolis',
-                          fontWeight: FontWeight.bold),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        side: BorderSide(
-                          color: Color(0xff92278f),
-                          width: 1.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => Get.offAll(Dashboard()),
-                    child: const Text(
-                      'Ok',
+                      'Go Home',
                       style: TextStyle(
                           color: Color(0xffffffff),
                           fontFamily: 'Metropolis',
@@ -1637,12 +2116,12 @@ class _RoomBookPageState extends State<RoomBookPage> {
                     style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
-                        side: BorderSide(
+                        side: const BorderSide(
                           color: Color(0xff92278f),
                           width: 1.0,
                         ),
                       ),
-                      backgroundColor: Color(0xff92278f),
+                      backgroundColor: const Color(0xff92278f),
                     ),
                   ),
                 ],
@@ -1650,37 +2129,202 @@ class _RoomBookPageState extends State<RoomBookPage> {
             ],
           ),
         );
+      }
 
-        Timer(Duration(seconds: 2), () {
-          Get.offAll(BookedHotelDetailsPage(
-            Bookedprice: widget.price.toStringAsFixed(2),
-            BookingId: result.bookResult!.bookingId,
-            cancellationCharge: widget.cancellationCharge.toString(),
-            payId: paymentId,
-            img: SaveImg,
-            status: 1,
-            city: "$city",
-          ));
-          // hotelRoomDetail.clear();
-          // hotelRoomDetail1.clear();
-        });
-        Timer(Duration(seconds: 4), () {
-          hotelRoomDetail.clear();
-          hotelRoomDetail1.clear();
-        });
+      if (response.statusCode == 200) {
+        final result = hotelBookFromJson(response.body);
+        if (result.bookResult!.error!.errorCode == 0) {
+          saveEmail(result.email);
+
+          setState(() {
+            isLoading = false;
+          });
+
+          saveBooking(result.bookResult!.bookingId, paymentId);
+          showDialog<String>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              icon: Container(
+                height: 100,
+                child: Lottie.asset('assets/lottie/success1.json',
+                    fit: BoxFit.contain),
+              ),
+              title: Text(
+                "Success",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width / 20,
+                    fontFamily: 'Metropolis',
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+              content: Text(
+                "Your booking is done successfully.\nYou will be re directed to voucher page.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width / 24,
+                    fontFamily: 'Metropolis',
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500),
+              ),
+              actions: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: () => Get.offAll(BookedHotelDetailsPage(
+                        Bookedprice: widget.price.toStringAsFixed(2),
+                        BookingId: result.bookResult!.bookingId,
+                        cancellationCharge:
+                            widget.cancellationCharge.toString(),
+                        payId: paymentId,
+                      )),
+                      child: const Text(
+                        'View Booking',
+                        style: TextStyle(
+                            color: Color(0xff92278f),
+                            fontFamily: 'Metropolis',
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: const BorderSide(
+                            color: Color(0xff92278f),
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => Get.offAll(Dashboard()),
+                      child: const Text(
+                        'Ok',
+                        style: TextStyle(
+                            color: Color(0xffffffff),
+                            fontFamily: 'Metropolis',
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: const BorderSide(
+                            color: Color(0xff92278f),
+                            width: 1.0,
+                          ),
+                        ),
+                        backgroundColor: const Color(0xff92278f),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          );
+
+          Timer(const Duration(seconds: 2), () {
+            Get.offAll(BookedHotelDetailsPage(
+              Bookedprice: widget.price.toStringAsFixed(2),
+              BookingId: result.bookResult!.bookingId,
+              cancellationCharge: widget.cancellationCharge.toString(),
+              payId: paymentId,
+              img: SaveImg,
+              status: 1,
+              city: "$city",
+            ));
+            // hotelRoomDetail.clear();
+            // hotelRoomDetail1.clear();
+          });
+          Timer(const Duration(seconds: 4), () {
+            hotelRoomDetail.clear();
+            hotelRoomDetail1.clear();
+          });
+        } else {
+          setState(() {
+            isLoading = false;
+          });
+          //booking failed $ payment done
+          //show alert and refund payment
+          refundPayment(paymentId);
+
+          //...
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              icon: Container(
+                height: 100,
+                child: Lottie.asset('assets/lottie/error-x.json',
+                    fit: BoxFit.contain),
+              ),
+              title: Text(
+                "OOPS...! ${result.bookResult!.error!.errorCode}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width / 20,
+                    fontFamily: 'Metropolis',
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+              content: Text(
+                //"Sorry, something went wrong\nIf some amount is deducted from your account, it will be refunded within 48 hours.",
+                "${result.bookResult!.error!.errorMessage}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width / 24,
+                    fontFamily: 'Metropolis',
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500),
+              ),
+              actions: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: () => Get.back(),
+                      child: const Text(
+                        'OK',
+                        style: TextStyle(
+                            color: Color(0xffffffff),
+                            fontFamily: 'Metropolis',
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: const BorderSide(
+                            color: Color(0xff92278f),
+                            width: 1.0,
+                          ),
+                        ),
+                        backgroundColor: const Color(0xff92278f),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          );
+          //...
+        }
       } else {
+        refundPayment(paymentId);
         setState(() {
           isLoading = false;
         });
         //booking failed $ payment done
         //show alert and refund payment
-        refundPayment(paymentId);
 
-        //...
         showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
             icon: Container(
               height: 100,
@@ -1688,7 +2332,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                   fit: BoxFit.contain),
             ),
             title: Text(
-              "OOPS...! ${result.bookResult!.error!.errorCode}",
+              "${response.statusCode} OOPS...!",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width / 20,
@@ -1697,8 +2341,7 @@ class _RoomBookPageState extends State<RoomBookPage> {
                   fontWeight: FontWeight.bold),
             ),
             content: Text(
-              //"Sorry, something went wrong\nIf some amount is deducted from your account, it will be refunded within 48 hours.",
-              "${result.bookResult!.error!.errorMessage}",
+              "${response.body}\nIf some amount is deducted from your account, it will be refunded within 48 hours.",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width / 24,
@@ -1723,12 +2366,12 @@ class _RoomBookPageState extends State<RoomBookPage> {
                     style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
-                        side: BorderSide(
+                        side: const BorderSide(
                           color: Color(0xff92278f),
                           width: 1.0,
                         ),
                       ),
-                      backgroundColor: Color(0xff92278f),
+                      backgroundColor: const Color(0xff92278f),
                     ),
                   ),
                 ],
@@ -1736,75 +2379,9 @@ class _RoomBookPageState extends State<RoomBookPage> {
             ],
           ),
         );
-        //...
       }
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-      //booking failed $ payment done
-      //show alert and refund payment
-      refundPayment(paymentId);
-
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
-          icon: Container(
-            height: 100,
-            child:
-                Lottie.asset('assets/lottie/error-x.json', fit: BoxFit.contain),
-          ),
-          title: Text(
-            "OOPS...!",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 20,
-                fontFamily: 'Metropolis',
-                color: Colors.black,
-                fontWeight: FontWeight.bold),
-          ),
-          content: Text(
-            //"Sorry, something went wrong\nIf some amount is deducted from your account, it will be refunded within 48 hours.",
-            "${result.bookResult!.error!.errorCode}\n${result.bookResult!.error!.errorMessage}\nYou will be re directed to voucher page.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 24,
-                fontFamily: 'Metropolis',
-                color: Colors.black,
-                fontWeight: FontWeight.w500),
-          ),
-          actions: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () => Get.back(),
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(
-                        color: Color(0xffffffff),
-                        fontFamily: 'Metropolis',
-                        fontWeight: FontWeight.bold),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      side: BorderSide(
-                        color: Color(0xff92278f),
-                        width: 1.0,
-                      ),
-                    ),
-                    backgroundColor: Color(0xff92278f),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      );
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -1821,14 +2398,12 @@ class _RoomBookPageState extends State<RoomBookPage> {
     print(response.statusCode);
     print('refund api');
 
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       Get.offAll(Dashboard());
     });
   }
 
   saveBooking(var bookingId, String paymentId) async {
-
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var loginMethod = prefs.get('login');
     var email = prefs.get('email');
@@ -1850,49 +2425,45 @@ class _RoomBookPageState extends State<RoomBookPage> {
     print("image: $SaveImg");
     print("..................................");
 
-
     final response = await http.post(
       Uri.parse('${api}api/hotel-book/save'),
-      body: jsonEncode(
-          {
-            "city": "$city",
-            "hotelname": "${widget.hotelName}",
-            "status": 1,
-            "bookingdate": "$bookdate",
-            "checkoutdate": "${widget.checkout}",
-            "checkindate": "${widget.checkin}",
-            "bookingid": bookingId,
-            "identity": "$email",
-            "price": widget.price.toStringAsFixed(2),
-            "offerprice": widget.offeredPrice.toStringAsFixed(2),
-            "payid": "$paymentId",
-            "cancelcharge": widget.cancellationCharge.toString(),
-            "image": "$SaveImg"
-          }
-      //     {
-      //   "city": "$city",
-      //   "hotelname": "${widget.hotelName}",
-      //   "status": 1,
-      //   "bookingdate": "$bookdate",
-      //   "checkoutdate": "${widget.checkout}",
-      //   "checkindate": "${widget.checkin}",
-      //   "bookingid": int.parse(bookingId.toString()),
-      //   "identity": "$email",
-      //   "payid": "$paymentId",
-      //   "price": "${widget.price.toStringAsFixed(2)}",
-      //   "offerprice": "${widget.offeredPrice.toStringAsFixed(2)}",
-      //   "cancelcharge": "${widget.cancellationCharge.toString()}",
-      //   "image": "$SaveImg",
-      // }
-      ),
+      body: jsonEncode({
+        "city": "$city",
+        "hotelname": "${widget.hotelName}",
+        "status": 1,
+        "bookingdate": "$bookdate",
+        "checkoutdate": "${widget.checkout}",
+        "checkindate": "${widget.checkin}",
+        "bookingid": bookingId,
+        "identity": "$email",
+        "price": widget.price.toStringAsFixed(2),
+        "offerprice": widget.offeredPrice.toStringAsFixed(2),
+        "payid": "$paymentId",
+        "cancelcharge": widget.cancellationCharge.toString(),
+        "image": "$SaveImg"
+      }
+          //     {
+          //   "city": "$city",
+          //   "hotelname": "${widget.hotelName}",
+          //   "status": 1,
+          //   "bookingdate": "$bookdate",
+          //   "checkoutdate": "${widget.checkout}",
+          //   "checkindate": "${widget.checkin}",
+          //   "bookingid": int.parse(bookingId.toString()),
+          //   "identity": "$email",
+          //   "payid": "$paymentId",
+          //   "price": "${widget.price.toStringAsFixed(2)}",
+          //   "offerprice": "${widget.offeredPrice.toStringAsFixed(2)}",
+          //   "cancelcharge": "${widget.cancellationCharge.toString()}",
+          //   "image": "$SaveImg",
+          // }
+          ),
       headers: {"content-type": "application/json"},
     );
 
     print(response.request!.method);
     print(response.statusCode);
     print(response.body);
-
-
 
     setState(() {
       isLoading = false;
@@ -1981,5 +2552,21 @@ class _RoomBookPageState extends State<RoomBookPage> {
   void dispose() {
     super.dispose();
     _razorpay.clear();
+  }
+
+  void saveEmail(String? email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      var loginMethod = prefs.get('login');
+
+      loginMethod == null ||
+              loginMethod == 'guest' && email != null ||
+              email != ''
+          ? prefs.setString('email', email.toString())
+          : null;
+      var mail = prefs.get('email');
+      print(email);
+      print(mail);
+    });
   }
 }

@@ -134,7 +134,10 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                     appBar: AppBar(
                       backgroundColor: Colors.purple,
                       automaticallyImplyLeading: false,
-                      title: Text("Booking confirmation",style: TextStyle(color: Colors.white),),
+                      title: Text(
+                        "Booking confirmation",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       leading: InkWell(
                         onTap: () {
                           Get.off(Dashboard());
@@ -324,33 +327,50 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                   child: Image.network(
                                                     widget.img,
                                                     fit: BoxFit.cover,
-                                                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                                      if (loadingProgress == null) {
+                                                    loadingBuilder: (BuildContext
+                                                            context,
+                                                        Widget child,
+                                                        ImageChunkEvent?
+                                                            loadingProgress) {
+                                                      if (loadingProgress ==
+                                                          null) {
                                                         return child;
                                                       }
                                                       return Center(
-                                                        child: CircularProgressIndicator(
-                                                          value: loadingProgress.expectedTotalBytes != null
-                                                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          value: loadingProgress
+                                                                      .expectedTotalBytes !=
+                                                                  null
+                                                              ? loadingProgress
+                                                                      .cumulativeBytesLoaded /
+                                                                  loadingProgress
+                                                                      .expectedTotalBytes!
                                                               : null,
                                                         ),
                                                       );
                                                     },
-                                                    errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                    errorBuilder:
+                                                        (BuildContext context,
+                                                            Object error,
+                                                            StackTrace?
+                                                                stackTrace) {
                                                       return Container(
                                                         height: 160,
                                                         width: 100,
-                                                        decoration: BoxDecoration(
+                                                        decoration:
+                                                            BoxDecoration(
                                                           color: Colors.black,
-                                                          image: DecorationImage(
-                                                            image: AssetImage("assets/images/no-img.png"),
+                                                          image:
+                                                              DecorationImage(
+                                                            image: AssetImage(
+                                                                "assets/images/no-img.png"),
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),
                                                       );
                                                     },
                                                   ),
-
                                                 ),
                                               ),
                                             ),
@@ -542,7 +562,10 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                       child:
                                                           SingleChildScrollView(
                                                         child: ReadMoreText(
-                                                          Address==null||Address==''? "No data available!" : "$Address",
+                                                          Address == null ||
+                                                                  Address == ''
+                                                              ? "No data available!"
+                                                              : "$Address",
                                                           trimLines: 4,
                                                           style: TextStyle(
                                                               fontFamily:
@@ -607,7 +630,10 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                               right: 30,
                                                               top: 5),
                                                       child: ReadMoreText(
-                                                        Contact == null || Contact == ''  ? "No data available!":"$Contact",
+                                                        Contact == null ||
+                                                                Contact == ''
+                                                            ? "No data available!"
+                                                            : "$Contact",
                                                         trimLines: 4,
                                                         style: TextStyle(
                                                             fontFamily:
@@ -648,52 +674,68 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                             ],
                                           ),
                                         ),
-                                        Longitude == '' || Latitude == '' || Longitude == null || Latitude == null ? Container() :  Container(
-                                          padding: EdgeInsets.only(
-                                              top: 40, bottom: 40, right: 20),
-                                          alignment: Alignment.centerRight,
-                                          child: Column(
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  // widget.longitude == ""?null:
+                                        Longitude == '' ||
+                                                Latitude == '' ||
+                                                Longitude == null ||
+                                                Latitude == null
+                                            ? Container()
+                                            : Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 40,
+                                                    bottom: 40,
+                                                    right: 20),
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Column(
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        // widget.longitude == ""?null:
 
-                                                  // Get.to(LocationPage(
-                                                  //   longitude:
-                                                  //       double.parse(Longitude),
-                                                  //   latitude:
-                                                  //       double.parse(Latitude),
-                                                  //   name: HotelName,
-                                                  //   description: Address,
-                                                  // ));
+                                                        // Get.to(LocationPage(
+                                                        //   longitude:
+                                                        //       double.parse(Longitude),
+                                                        //   latitude:
+                                                        //       double.parse(Latitude),
+                                                        //   name: HotelName,
+                                                        //   description: Address,
+                                                        // ));
 
-                                                  await MapLauncher.showMarker(
-                                                    mapType: MapType.google,
-                                                    coords: Coords(
-                                                        double.parse(Latitude),
-                                                        double.parse(Longitude)),
-                                                    title: "$HotelName",
-                                                  );
-                                                },
-                                                child: CircleAvatar(
-                                                    radius: 20,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    child: Image.asset(
-                                                        'assets/images/icons/location.png')),
-                                              ),
-                                              Text(
-                                                "MAP",
-                                                style: TextStyle(
-                                                  fontFamily: "Metropolis",
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize:
-                                                      screenSize.width / 26,
+                                                        await MapLauncher
+                                                            .showMarker(
+                                                          mapType:
+                                                              MapType.google,
+                                                          coords: Coords(
+                                                              double.parse(
+                                                                  Latitude),
+                                                              double.parse(
+                                                                  Longitude)),
+                                                          title: "$HotelName",
+                                                        );
+                                                      },
+                                                      child: CircleAvatar(
+                                                          radius: 20,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          child: Image.asset(
+                                                              'assets/images/icons/location.png')),
+                                                    ),
+                                                    Text(
+                                                      "MAP",
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            "Metropolis",
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize:
+                                                            screenSize.width /
+                                                                26,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
                                       ]),
                                       SizedBox(
                                         height: 20,
@@ -778,7 +820,10 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                         width: 10,
                                                       ),
                                                       Flexible(
-                                                        child: Html(data: bookedRoomDetails[index].roomDescription),
+                                                        child: Html(
+                                                            data: bookedRoomDetails[
+                                                                    index]
+                                                                .roomDescription),
 
                                                         // Text(
                                                         //   "${bookedRoomDetails[index].roomDescription}",
@@ -849,17 +894,38 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                     height: 10,
                                                   ),
                                                   Tooltip(
-                                                    message: 'Cancellation Policy',
+                                                    message:
+                                                        'Cancellation Policy',
                                                     child: InkWell(
                                                       onTap: () {
-                                                        showModalBottomSheet<void>(
+                                                        showModalBottomSheet<
+                                                            void>(
                                                           context: context,
                                                           builder: (context) {
                                                             return HotelCancellationPolicy(
-                                                              charge: bookedRoomDetails[index].cancellationPolicies![0].charge,
-                                                              chargeType: bookedRoomDetails[index].cancellationPolicies![0].chargeType,
-                                                              from: bookedRoomDetails[index].cancellationPolicies![0].fromDate.toString(),
-                                                              to: bookedRoomDetails[index].cancellationPolicies![0].toDate.toString(),
+                                                              charge: bookedRoomDetails[
+                                                                      index]
+                                                                  .cancellationPolicies![
+                                                                      0]
+                                                                  .charge,
+                                                              chargeType:
+                                                                  bookedRoomDetails[
+                                                                          index]
+                                                                      .cancellationPolicies![
+                                                                          0]
+                                                                      .chargeType,
+                                                              from: bookedRoomDetails[
+                                                                      index]
+                                                                  .cancellationPolicies![
+                                                                      0]
+                                                                  .fromDate
+                                                                  .toString(),
+                                                              to: bookedRoomDetails[
+                                                                      index]
+                                                                  .cancellationPolicies![
+                                                                      0]
+                                                                  .toDate
+                                                                  .toString(),
                                                             );
                                                           },
                                                         );
@@ -869,13 +935,16 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                           Icon(
                                                             Icons.check,
                                                             size: 20,
-                                                           // color: Colors.green,
+                                                            // color: Colors.green,
                                                           ),
                                                           SizedBox(
                                                             width: 10,
                                                           ),
                                                           Flexible(
-                                                            child: Html(data: bookedRoomDetails[index].cancellationPolicy),
+                                                            child: Html(
+                                                                data: bookedRoomDetails[
+                                                                        index]
+                                                                    .cancellationPolicy),
                                                             // Text(
                                                             //   "${bookedRoomDetails[index].cancellationPolicy!.replaceAll("#^#", '.\n').replaceAll("|#!#", '')}",
                                                             //   // "Room Deluxe#^#100.00% of total amount will be charged, If cancelled between 29-Dec-2022 00:00:00 and 31-Dec-2022 23:59:59.|#!#",
@@ -910,7 +979,7 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                       Text(
                                                         "${bookedRoomDetails[index].smokingPreference}",
                                                         style: TextStyle(
-                                                          fontSize:14,
+                                                          fontSize: 14,
                                                         ),
                                                       )
                                                     ],
@@ -942,35 +1011,92 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                                         width: 10,
                                                       ),
                                                       Tooltip(
-                                                        message: "Price Breakdown",
+                                                        message:
+                                                            "Price Breakdown",
                                                         child: InkWell(
                                                             onTap: () {
-                                                              showModalBottomSheet<void>(context: context,
-                                                                builder:(context) {
+                                                              showModalBottomSheet<
+                                                                  void>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
                                                                   return HotelPriceBreakdown(
-                                                                    roomPrice: bookedRoomDetails[index].price!.roomPrice,
-                                                                    tax: bookedRoomDetails[index].price!.tax,
-                                                                    extraGuestCharge: bookedRoomDetails[index].price!.extraGuestCharge,
-                                                                    childCharge: bookedRoomDetails[index].price!.childCharge,
-                                                                    otherCharges: bookedRoomDetails[index].price!.otherCharges,
-                                                                    discount: bookedRoomDetails[index].price!.discount,
-                                                                    publishedPrice: bookedRoomDetails[index].price!.publishedPrice,
-                                                                    publishedPriceRoundOff: bookedRoomDetails[index].price!.publishedPriceRoundedOff,
-                                                                    offeredPrice: bookedRoomDetails[index].price!.offeredPrice,
-                                                                    offeredPriceRoundOff: bookedRoomDetails[index].price!.offeredPriceRoundedOff,
-                                                                    agentCommission: bookedRoomDetails[index].price!.agentCommission,
-                                                                    agentMarkup: bookedRoomDetails[index].price!.agentMarkUp,
-                                                                    serviceTax: bookedRoomDetails[index].price!.serviceTax,
-                                                                    tcs: bookedRoomDetails[index].price!.tcs,
-                                                                    tds: bookedRoomDetails[index].price!.tds,
-                                                                    serviceCharge: bookedRoomDetails[index].price!.serviceCharge,
-                                                                    totalGstAmount: bookedRoomDetails[index].price!.totalGstAmount,
+                                                                    roomPrice: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .roomPrice,
+                                                                    tax: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .tax,
+                                                                    extraGuestCharge: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .extraGuestCharge,
+                                                                    childCharge: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .childCharge,
+                                                                    otherCharges: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .otherCharges,
+                                                                    discount: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .discount,
+                                                                    publishedPrice: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .publishedPrice,
+                                                                    publishedPriceRoundOff: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .publishedPriceRoundedOff,
+                                                                    offeredPrice: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .offeredPrice,
+                                                                    offeredPriceRoundOff: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .offeredPriceRoundedOff,
+                                                                    agentCommission: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .agentCommission,
+                                                                    agentMarkup: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .agentMarkUp,
+                                                                    serviceTax: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .serviceTax,
+                                                                    tcs: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .tcs,
+                                                                    tds: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .tds,
+                                                                    serviceCharge: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .serviceCharge,
+                                                                    totalGstAmount: bookedRoomDetails[
+                                                                            index]
+                                                                        .price!
+                                                                        .totalGstAmount,
                                                                   );
                                                                 },
                                                               );
                                                             },
                                                             child: Icon(
-                                                              Icons.info_outlined,
+                                                              Icons
+                                                                  .info_outlined,
                                                               size: 20,
                                                             )),
                                                       )
@@ -1207,8 +1333,8 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                         width: double.infinity,
                                         height: 50,
                                         child:
-                                      //widget.status != 1 && clickCancel ?
-                                        OutlinedButton(
+                                            //widget.status != 1 && clickCancel ?
+                                            OutlinedButton(
                                           style: OutlinedButton.styleFrom(
                                             side: BorderSide(
                                                 color: widget.status == 1
@@ -1353,10 +1479,10 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
                                             widget.status == 1
                                                 ? "Cancel Booking"
                                                 : widget.status == 2
-                                                    ? "Expired" :
-                                                widget.status == 4
-                                                    ? "Pending"
-                                                    : "Cancelled",
+                                                    ? "Expired"
+                                                    : widget.status == 4
+                                                        ? "Pending"
+                                                        : "Cancelled",
                                             style: TextStyle(
                                                 fontSize: screenSize.width / 20,
                                                 color: widget.status == 1
@@ -1403,9 +1529,7 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
   }
 
   getBookingDetails() async {
-
-    try{
-
+    try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var ips = prefs.getString('ip');
       // print("ip : $ips");
@@ -1430,7 +1554,7 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
             icon: Container(
               height: 100,
               child:
-              Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
+                  Lottie.asset('assets/lottie/500.json', fit: BoxFit.contain),
             ),
             title: Text(
               "OOPS! There is an internal server error occoured",
@@ -1495,7 +1619,8 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
         // print("..........................................");
 
         // print(result.getBookingDetailResult.hotelRoomsDetails);
-        bookedRoomDetails.addAll(result.getBookingDetailResult.hotelRoomsDetails);
+        bookedRoomDetails
+            .addAll(result.getBookingDetailResult.hotelRoomsDetails);
 
         // String desiredFormat = dateString.substring(0, 10);
 
@@ -1516,7 +1641,8 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
               .toString()
               .substring(0, 10);
           loading = false;
-          HotelBookingStatus = result.getBookingDetailResult.hotelBookingStatus!;
+          HotelBookingStatus =
+              result.getBookingDetailResult.hotelBookingStatus!;
           ConfirmationNo = result.getBookingDetailResult.confirmationNo!;
           BookingId = result.getBookingDetailResult.bookingId.toString();
           BookingDate = result.getBookingDetailResult.bookingDate.toString();
@@ -1533,19 +1659,17 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
           NoOfRooms = result.getBookingDetailResult.noOfRooms.toString();
           starRating = result.getBookingDetailResult.starRating!;
         });
-        if(widget.changerequestid != null){
+        if (widget.changerequestid != null) {
           checkStatus();
         }
       }
-
-    }catch(e){
+    } catch (e) {
       print(e);
     }
-
   }
 
   CancelBooking() async {
-    try{
+    try {
       loading = true;
       setState(() {
         clickCancel = true;
@@ -1577,7 +1701,6 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
       final result = hotelCancellationFromJson(response.body);
 
       if (result!.hotelChangeRequestResult!.responseStatus == 1) {
-
         // refundPayment(widget.payId);
         showDialog<String>(
           context: context,
@@ -1638,7 +1761,8 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
         );
         // var a = result.hotelChangeRequestResult!.changeRequestId;
 
-        saveCancel(widget.BookingId,result.hotelChangeRequestResult!.changeRequestId,4,false);
+        saveCancel(widget.BookingId,
+            result.hotelChangeRequestResult!.changeRequestId, 4, false);
       }
 
       if (response.statusCode == 200) {
@@ -1650,10 +1774,9 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
           loading = false;
         });
       }
-    }catch(e){
+    } catch (e) {
       print(e);
     }
-
   }
 
   // refundPayment(String paymentId) async {
@@ -1676,9 +1799,8 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
   //
   // }
 
-  void saveCancel(bookingId,changeRequestId,ststus,refund) async {
-
-    try{
+  void saveCancel(bookingId, changeRequestId, ststus, refund) async {
+    try {
       // SharedPreferences prefs = await SharedPreferences.getInstance();
       // prefs.setBool("status", true);
       print('changeRequestId: $changeRequestId');
@@ -1696,26 +1818,21 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
       print(response.request);
       print(response.body);
       print(response.statusCode);
-
-    }catch(e){
+    } catch (e) {
       print(e);
     }
-
   }
 
-
   void checkStatus() async {
-    try{
+    try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var ips = prefs.getString('ip');
 //changerequestid
       print("iddd:  ${widget.changerequestid}");
       final response = await http.post(
         Uri.parse(api + 'api/hotels/change-request-status'),
-        body: jsonEncode({
-          "EndUserIp": ips,
-          "ChangeRequestId": "${widget.changerequestid}"
-        }),
+        body: jsonEncode(
+            {"EndUserIp": ips, "ChangeRequestId": "${widget.changerequestid}"}),
         headers: {"content-type": "application/json"},
       );
       print(response.request);
@@ -1724,25 +1841,19 @@ class _BookedHotelDetailsPageState extends State<BookedHotelDetailsPage> {
 
       Map<String, dynamic> result = jsonDecode(response.body);
 
-      int status = result['HotelChangeRequestStatusResult']['ChangeRequestStatus'];
+      int status =
+          result['HotelChangeRequestStatusResult']['ChangeRequestStatus'];
 
       print(status);
       //ststus 1 = pending, 2 = in progress, 3 = processed, 4 = rejected
 
-      if(status == 3){
-
-        if(widget.refund == false){
+      if (status == 3) {
+        if (widget.refund == false) {
           // refundPayment(widget.payId);
-
         }
-
       }
-    }catch(e){
+    } catch (e) {
       print(e);
     }
-
-
   }
-
-
 }

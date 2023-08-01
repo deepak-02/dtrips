@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:dtrips/home/ui/hotel/models/roomModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -52,19 +51,19 @@ var color = Colors.white;
 
 var chechinDate = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
 var checkOutDate = DateFormat('yyyy-MM-dd')
-    .format(DateTime.now().add(Duration(days: 1)))
+    .format(DateTime.now().add(const Duration(days: 1)))
     .toString();
 
 var inDate = DateFormat('dd MMM').format(DateTime.now()).toString();
 var outDate = DateFormat('dd MMM')
-    .format(DateTime.now().add(Duration(days: 1)))
+    .format(DateTime.now().add(const Duration(days: 1)))
     .toString();
 
 var night = 1;
 
 var passDate1 = DateFormat('dd MMM').format(DateTime.now()).toString();
 var passDate2 = DateFormat('dd MMM')
-    .format(DateTime.now().add(Duration(days: 1)))
+    .format(DateTime.now().add(const Duration(days: 1)))
     .toString();
 
 //Flight.............
@@ -123,7 +122,8 @@ List<Baggage> mealItems = [];
 List<SeatDynamic>? seatDynamic = [];
 List<SpecialService>? specialServices = [];
 
-Set selectedSeats = {};
+// Set selectedSeats = {};
+List<Map<String, dynamic>> selectedSeats = [];
 
 List FlightSeats = [];
 
@@ -136,4 +136,3 @@ dynamic selectedOption;
 var selectedItem;
 var selectedDuration = "";
 var selectedFlight = "";
-

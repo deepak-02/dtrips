@@ -497,7 +497,6 @@ class _LoginPageState extends State<LoginPage> {
 
   facebookLogin() async {
     try {
-
       final result = await FacebookAuth.instance.login(permissions: [
         'email',
         'public_profile',

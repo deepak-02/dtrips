@@ -15,8 +15,14 @@ class SeatSelectionPage extends StatefulWidget {
 }
 
 class _SeatSelectionPageState extends State<SeatSelectionPage> {
+  int traveller = 1;
+
   @override
   void initState() {
+    setState(() {
+      traveller = noOfAdult + noOfChild + noOfInfant;
+      print("traveller: $traveller");
+    });
     super.initState();
   }
 
@@ -27,7 +33,10 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
         backgroundColor: Colors.purple,
         leading: IconButton(
           tooltip: 'back',
-          icon: Icon(Icons.arrow_back,color: Colors.white,),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Get.back();
           },
@@ -36,15 +45,18 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
           children: [
             Text(
               "${widget.origin}",
-              style: TextStyle(fontSize: 16,color: Colors.white),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Icon(Icons.arrow_right_alt,color: Colors.white,),
+              child: Icon(
+                Icons.arrow_right_alt,
+                color: Colors.white,
+              ),
             ),
             Text(
               "${widget.destination}",
-              style: TextStyle(fontSize: 16,color: Colors.white),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
           ],
         ),
@@ -69,9 +81,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                       ),
                     ],
                   ),
-                  Text(
-                      "2 travellers"
-                  ),
+                  Text("2 travellers"),
                 ],
               ),
             ),
@@ -96,7 +106,6 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
           ],
         ),
       ),
-
       body: SafeArea(
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
@@ -134,38 +143,39 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                               ),
                             ],
                           ),
-                          // SizedBox(height: 10,),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.start,
-                          //   crossAxisAlignment: CrossAxisAlignment.center,
-                          //   children: [
-                          //     Container(
-                          //       height: 20,
-                          //       width: 20,
-                          //       alignment: Alignment.center,
-                          //       decoration: BoxDecoration(
-                          //           borderRadius: BorderRadius.circular(4),
-                          //           border: Border.all(color: Color(0xFF4A4A4A)),
-                          //           color: Color(0xFFD9D9D9)
-                          //       ),
-                          //       child: Icon(
-                          //         Icons.close,
-                          //         size: 16,
-                          //         color: Color(0xFF4A4A4A),
-                          //       ),
-                          //     ),
-                          //     Padding(
-                          //       padding: const EdgeInsets.only(left: 10),
-                          //       child: Text(
-                          //         "Unavailable seat",
-                          //         style: TextStyle(
-                          //           fontSize: 14,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //
-                          //   ],
-                          // ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 20,
+                                width: 20,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    border:
+                                        Border.all(color: Color(0xFF4A4A4A)),
+                                    color: Color(0xFFD9D9D9)),
+                                child: Icon(
+                                  Icons.close,
+                                  size: 16,
+                                  color: Color(0xFF4A4A4A),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Unavailable seat",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -186,6 +196,31 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Text(
                                   "Selected seat",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: Colors.deepPurple),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Available seat (free)",
                                   style: TextStyle(
                                     fontSize: 14,
                                   ),
@@ -242,26 +277,114 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                                   height: 30,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4),
-                                    // color: Colors.purple
+                                    // color: Colors.red
                                   ),
                                 )
                               : Padding(
                                   padding: const EdgeInsets.all(2),
-                                  child: Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(4),
-                                        color: Colors.purple),
-                                    child: Center(
-                                      child: FittedBox(
-                                        child: Text(
-                                          '${seat['Code']}',
-                                          style: TextStyle(color: Colors.white),
+                                  child: seat['AvailablityType'] == 3
+                                      ? Container(
+                                          height: 35,
+                                          width: 35,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              border: Border.all(
+                                                  color: Color(0xFF4A4A4A)),
+                                              color: Color(0xFFD9D9D9)),
+                                          child: Stack(
+                                            children: [
+                                              Center(
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    '${seat['Code']}',
+                                                    style: TextStyle(
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                              ),
+                                              Center(
+                                                child: Icon(
+                                                  Icons.close,
+                                                  // size: 16,
+                                                  color: Color(0x86707070),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : GestureDetector(
+                                          onTap: () {
+                                            // change the seat color and get the seat details
+                                            setState(() {
+                                              if (selectedSeats
+                                                  .contains(seat)) {
+                                                // If seat is already selected, remove it from the set
+
+                                                selectedSeats.remove(seat);
+                                              } else {
+                                                // If seat is not selected, add it to the set
+                                                selectedSeats.add(seat);
+                                                if (selectedSeats.length <=
+                                                    traveller) {
+                                                  print(
+                                                      "add seat ${selectedSeats.length}");
+                                                } else {
+                                                  selectedSeats.clear();
+                                                  selectedSeats.add(seat);
+                                                  print(
+                                                      "clear selected seats and start over");
+                                                }
+                                              }
+                                            });
+                                            // print(selectedSeats.toList());
+                                          },
+                                          child: selectedSeats.contains(seat)
+                                              ? Container(
+                                                  width: 35,
+                                                  height: 35,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4),
+                                                      border: Border.all(
+                                                          color: Color(
+                                                              0xFF14741B)),
+                                                      color: Color(0xFFE7FCE9)),
+                                                  child: Center(
+                                                    child: FittedBox(
+                                                      child: Text(
+                                                        '${seat['Code']}',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              : Container(
+                                                  width: 35,
+                                                  height: 35,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4),
+                                                      color: seat['Price'] == 0
+                                                          ? Colors.deepPurple
+                                                          : Colors.purple),
+                                                  child: Center(
+                                                    child: FittedBox(
+                                                      child: Text(
+                                                        '${seat['Code']}',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
                                 ),
                       ],
                     ),

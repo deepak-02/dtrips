@@ -67,17 +67,20 @@ class _FlightSearchState extends State<FlightSearch> {
 
     return Scaffold(
       appBar: AppBar(
-         backgroundColor: Colors.purple,
+        backgroundColor: Colors.purple,
         leading: IconButton(
           tooltip: 'back',
-          icon: Icon(Icons.arrow_back,color: Colors.white,),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Get.back();
           },
         ),
         title: Text(
           "$resultLength results",
-          style: TextStyle(fontSize: 16,color: Colors.white),
+          style: TextStyle(fontSize: 16, color: Colors.white),
         ),
       ),
       body: SafeArea(
@@ -456,12 +459,34 @@ class _FlightSearchState extends State<FlightSearch> {
                                                 builder:
                                                     (BuildContext context) {
                                                   return FlightPriceBreakdown(
-                                                    count: noOfAdult + noOfChild + noOfInfant,
-                                                    tickets: double.parse(items.fare!.publishedFare!.toStringAsFixed(2)),
-                                                    fare: double.parse(items.fare!.baseFare!.toStringAsFixed(2)),
-                                                    tax: double.parse(items.fare!.tax!.toStringAsFixed(2)) + double.parse(items.fare!.otherCharges!.toStringAsFixed(2)),
-                                                    discount: items.fare!.discount,
-                                                    totalPrice: double.parse((items.fare!.tax! + items.fare!.otherCharges! + items.fare!.baseFare! - items.fare!.discount!).toStringAsFixed(2)),
+                                                    count: noOfAdult +
+                                                        noOfChild +
+                                                        noOfInfant,
+                                                    tickets: double.parse(items
+                                                        .fare!.publishedFare!
+                                                        .toStringAsFixed(2)),
+                                                    fare: double.parse(items
+                                                        .fare!.baseFare!
+                                                        .toStringAsFixed(2)),
+                                                    tax: double.parse(items
+                                                            .fare!.tax!
+                                                            .toStringAsFixed(
+                                                                2)) +
+                                                        double.parse(items
+                                                            .fare!.otherCharges!
+                                                            .toStringAsFixed(
+                                                                2)),
+                                                    discount:
+                                                        items.fare!.discount,
+                                                    totalPrice: double.parse((items
+                                                                .fare!.tax! +
+                                                            items.fare!
+                                                                .otherCharges! +
+                                                            items.fare!
+                                                                .baseFare! -
+                                                            items.fare!
+                                                                .discount!)
+                                                        .toStringAsFixed(2)),
                                                   );
                                                 },
                                               );
